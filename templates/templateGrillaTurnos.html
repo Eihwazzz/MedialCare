@@ -1,0 +1,63 @@
+<div class="container">
+	<div class="row">
+		<div class="col-xs-8 col-md-6 col-lg-4 col-xs-offset-0 col-md-offset-0 col-lg-offset-0">
+			<button class="btn btn-Primary" ng-click="volver();">
+				Volver
+			</button>
+		</div>
+	</div>
+	</br>
+		<!--<div class="row">
+		<div class="col-xs-8 col-md-6 col-lg-4 col-xs-offset-2 col-md-offset-3 col-lg-offset-4">
+			<h1>Lista de Turnos</h1> 
+		</div>
+	</div>
+	  	 
+		           
+<div class="CajaInicio animated bounceInRight">
+			<input type="search" placeholder="Buscar Turno" ng-model="miFiltro"/>
+			<table class='table table-hover table-responsive' id="listaTurnos">
+				<thead>
+					<tr>
+						<th>  Doctor     </th>
+						<th>  Paciente   </th>
+						<th>  Fecha     </th>
+						<th>  Horario  </th>
+					</tr> 
+				</thead>
+				<tbody class="grillaTurnos">
+				<tr ng-repeat="turno in ListadoTurnos|filter:miFiltro as resultado" contenteditable="{{editmode ? true : false}}">
+
+					<td>{{turno.cod_doctor}}</td>
+					<td>{{turno.id_paciente}}</td>
+					<td>{{turno.fecha}}</td>
+					<td>{{turno.horario}}</td>-->
+
+					<!--<td><button class='btn btn-danger' name='Borrar' ng-click="Borrar(persona.id_administrador)">   <span class='glyphicon glyphicon-remove-circle'>&nbsp;</span>Borrar</button></td>
+					
+					<td><button class='btn btn-warning' name='Modificar' ui-sref="modificar({id:persona.id_administrador,nombre:persona.nombre,mail:persona.mail,clave:persona.clave,foto:persona.foto})"><span class='glyphicon glyphicon-edit'>&nbsp;</span>Modificar</button></td>-->
+				
+				<!--</tr>
+				<tr ng-if="resultado.length==0">
+
+					<td>{{current.turno}</td>
+		
+					<td>No existen turnos con esos datos</td>
+					<td></td>
+					<td></td>
+					<td></td>	
+					<td></td>					
+				</tr>
+				</tbody>
+			</table>
+		</div>
+		
+	</div>-->
+	<div ui-grid="gridOptions" class="myGrid"
+	ui-grid-pagination
+	ui-grid-auto-resize
+    ui-grid-resize-columns
+    ui-grid-edit
+    ui-grid-selection
+    ui-grid-exporter></div>
+</div>

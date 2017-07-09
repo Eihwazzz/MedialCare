@@ -1,0 +1,94 @@
+<div class="container">
+	<div class="row">
+		<div class="col-xs-8 col-md-6 col-lg-4 col-xs-offset-0 col-md-offset-0 col-lg-offset-0">
+			<button class="btn btn-Primary" ng-click="volver();">
+				Volver
+			</button>
+		</div>
+	</div>
+	<div class="row">
+		<!--<div class="col-xs-2 col-md-2 col-lg-4 col-xs-offset-2 col-md-offset-2 col-lg-offset-4">-->
+		<select ng-options="perf.name as perf.name for perf in perfiles" ng-model="selectedUser" ng-change="opcionesTurnos()"></select>
+		</br>
+			<input type="search" placeholder="Buscar Opcion Elegida" ng-model="miFiltro"/>
+			<table ng-if="selectedUser == 'Doctores'" class='table table-hover table-responsive' id="listaOpciones">
+				<thead>
+					<tr>
+						<th>  Nombre   </th>				
+						<th>  Apellido     </th>
+						<th>  Mail   </th>
+						<th>  Telefono     </th>
+						<th>  Especialidad  </th>
+						<th>  Turno   </th>
+					</tr> 
+				</thead>
+				<tbody class="grillaUsuarios">
+				<tr ng-repeat="opcion in ListadoOpciones|filter:miFiltro as resultado" contenteditable="{{editmode ? true : false}}">
+
+					<td>{{opcion.nombre}}</td>
+					<td>{{opcion.apellido}}</td>
+					<td>{{opcion.mail}}</td>
+					<td>{{opcion.telefono}}</td>
+					<td>{{opcion.nombre_espec}}</td>
+					<td><button class="btn btn-warning" ng-click="solTurno(opcion.cod_doctor);" style="width:200px;">Solicitar turno</td>
+				
+				</tr>
+				
+				<tr ng-show="modificar">
+					<td><input type="hidden" ng-model="nuevoId"/></td>
+
+					<td><input style="font-size:18px" type="text" ng-model="nuevoNombre"/></td>
+
+					<td><input style="font-size:18px" type="text" ng-model="nuevoMail"/></td>
+
+					<td><input style="font-size:18px" type="text" ng-model="nuevaClave"/></td>
+
+					<td>
+						<input class='btn btn-warning' name='Borrar' type="button" ng-click="modify()" value="Modificar"/>
+					</td>
+				</tr>				
+				<tr ng-if="resultado.length==0">
+
+					<td>{{current.opcion}}</td>
+		
+					<td>No existen opciones con esos datos</td>
+					<td>o no selecciono ninguna opcion</td>
+					<td></td>
+					<td></td>	
+					<td></td>					
+				</tr>
+				</tbody>
+			</table>
+			<table ng-if="selectedUser == 'Especialidades'" class='table table-hover table-responsive' id="listaOpciones">
+				<thead>
+					<tr>
+						<th>  Especialidad   </th>				
+
+					</tr> 
+				</thead>
+				<tbody class="grillaUsuarios">
+				<tr ng-repeat="opcion in ListadoOpciones|filter:miFiltro as resultado" contenteditable="{{editmode ? true : false}}">
+
+					<td>{{opcion.nombre_espec}}</td>
+				
+				</tr>
+				
+							
+				<tr ng-if="resultado.length==0">
+
+					<td>{{current.opcion}}</td>
+		
+					<td>No existen opciones con esos datos</td>
+					<td>o no selecciono ninguna opcion</td>
+					<td></td>
+					<td></td>	
+					<td></td>					
+				</tr>
+				</tbody>
+			</table>
+		<!--<button class="btn btn-warning" ng-click="solTurno();" style="width:200px;">
+			Solicitar turno-->
+		<!--</div>-->
+	</div>
+	
+</div>

@@ -1,0 +1,76 @@
+<div class="container">
+	<div class="row">
+		<div class="col-xs-8 col-md-6 col-lg-4 col-xs-offset-0 col-md-offset-0 col-lg-offset-0">
+			<button class="btn btn-Primary" ng-click="volver();">
+				Volver
+			</button>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-xs-8 col-md-6 col-lg-4 col-xs-offset-2 col-md-offset-3 col-lg-offset-4">
+			<h1>Lista de Usuarios</h1> 
+		</div>
+	</div>
+	  	 
+		           
+<div class="CajaInicio animated bounceInRight">
+		<!-- id="listaPersonas" -->
+			<select ng-options="perf.name as perf.name for perf in perfiles" ng-model="selectedUser" ng-change="mostrarPerfiles()">
+            
+          </select>
+          </br>
+			<input type="search" placeholder="Buscar Persona" ng-model="miFiltro"/>
+			<table class='table table-hover table-responsive' id="listaPersonas">
+				<thead>
+					<tr>
+						<th>  Foto   </th>				
+						<th>  Nombre     </th>
+						<th>  Mail   </th>
+						<th>  BORRAR     </th>
+						<th>  MODIFICAR  </th>
+					</tr> 
+				</thead>
+				<tbody class="grillaUsuarios">
+				<tr ng-repeat="persona in ListadoPersonas|filter:miFiltro as resultado" contenteditable="{{editmode ? true : false}}">
+
+					<td class="col-lg-1"><img  class='fotoGrilla' ng-src="../TPFinalServices/Datos/fotos/{{persona.foto}}" /></td>
+					<td>{{persona.nombre}}</td>
+					<td>{{persona.mail}}</td>
+
+					<td><button class='btn btn-danger' name='Borrar' ng-click="Borrar(persona.id_administrador)">   <span class='glyphicon glyphicon-remove-circle'>&nbsp;</span>Borrar</button></td>
+					
+					<!--<td><button class='btn btn-warning' name='Modificar' ui-sref="modificar({id:persona.id_administrador,nombre:persona.nombre,mail:persona.mail,clave:persona.clave,foto:persona.foto})"><span class='glyphicon glyphicon-edit'>&nbsp;</span>Modificar</button></td>-->
+					<td><button class='btn btn-warning' name='Modificar' ng-click="modificar2(persona)"><span class='glyphicon glyphicon-edit'>&nbsp;</span>Modificar</button></td>
+					<!-- testeo de algo<td><input type="checkbox" ng-model="selection.ids[persona.id_administrador]"/></td>-->
+				
+				</tr>
+				
+				<tr ng-show="modificar">
+					<td><input type="hidden" ng-model="nuevoId"/></td>
+
+					<td><input style="font-size:18px" type="text" ng-model="nuevoNombre"/></td>
+
+					<td><input style="font-size:18px" type="text" ng-model="nuevoMail"/></td>
+
+					<td><input style="font-size:18px" type="text" ng-model="nuevaClave"/></td>
+
+					<td>
+						<input class='btn btn-warning' name='Borrar' type="button" ng-click="modify()" value="Modificar"/>
+					</td>
+				</tr>				
+				<tr ng-if="resultado.length==0">
+
+					<td>{{current.persona}}</td>
+		
+					<td>No existen personas con esos datos</td>
+					<td></td>
+					<td></td>
+					<td></td>	
+					<td></td>					
+				</tr>
+				</tbody>
+			</table>
+		</div>
+		
+	</div>
+</div>

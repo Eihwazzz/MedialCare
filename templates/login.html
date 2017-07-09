@@ -1,0 +1,36 @@
+<div class="container">
+	<form class="form-signin">
+        <h2 class="">Iniciar Sesi&oacute;n</h2>
+        <label for="inputEmail" class="sr-only">Email</label>
+        <input ng-hide="mostrarInputs == false" type="email" ng-model="usuario.mail" class="form-control" placeholder="Email" required autofocus>
+        <label for="inputPassword" class="sr-only">Contrase&ntilde;a</label>
+        <input ng-hide="mostrarInputs == false" type="password" ng-model="usuario.password" class="form-control" placeholder="Contrase&ntilde;a" required>
+          <!--<select ng-hide="mostrarSelect == false" ng-options="perf.name as perf.name for perf in perfiles" ng-model="selectedUser">
+            
+          </select>-->
+        <div class="radioDiv">
+          
+            <input id="radio1" class="radio" type="radio" ng-model="admin" name="radioBtn" value="Administrador" ng-click="rellenar(admin)">
+            <label for="radio1" class="form-signin-heading"> Administrador
+          </label>
+       </div>
+        <div class="radioDiv">
+          
+            <input id="radio2" class="radio" type="radio" ng-model="paciente" name="radioBtn" value="Paciente" ng-click="rellenar(paciente)">
+            <label for="radio2" class="form-signin-heading"> Paciente
+          </label>
+        </div>
+        <div class="radioDiv">
+         
+            <input id="radio3" class="radio" type="radio" ng-model="doctor" name="radioBtn" value="Doctor" ng-click="rellenar(doctor)"> 
+            <label for="radio3" class="form-signin-heading">
+            Doctor
+          </label>
+        </div>
+        
+        <button class="btn btn-lg btn-primary btn-block" ng-click="logear()">Ingresar</button>
+        
+        <button class="btn btn-lg btn-primary btn-block" ng-click="limpiarPerfiles()">Limpiar Perfiles</button>
+        
+      </form>
+</div>
