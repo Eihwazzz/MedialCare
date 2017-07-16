@@ -52,48 +52,141 @@ angular.module('MyFinalWeb.MyController',[])
       $state.go('menu');
     };
 })
-.controller('menuCtrl', function($scope, $auth, $state) {
+.controller('menuCtrl', function($scope, $auth, $state, $timeout) {
 	
-    $scope.solTurno = function(){
-      $state.go('solicitarTurno');
-    };
+  var markerArray = []; 
+  var directionsService = new google.maps.DirectionsService;
+  var pos = {};
 
-    $scope.verTurnos = function(){
-      $state.go('grillaTurnos');
-    };
-    $scope.initMap = function(){
+  var posConsultorio = "-34.803333,-58.4532453";
+
+  $scope.solTurno = function(){
+    $state.go('solicitarTurno');
+  };
+
+  $scope.verTurnos = function(){
+    $state.go('grillaTurnos');
+  };
+  //$scope.initMap = function(){
   var map = new google.maps.Map(document.getElementById('map'), {
-    center: {lat: -34.397, lng: 150.644},
-    zoom: 15
-  });
-  var infoWindow = new google.maps.InfoWindow({map: map});
-
-  // Try HTML5 geolocation.
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(function(position) {
-      var pos = {
-        lat: position.coords.latitude,
-        lng: position.coords.longitude
-      };
-
-      infoWindow.setPosition(pos);
-      infoWindow.setContent('Location found.');
-      map.setCenter(pos);
-    }, function() {
-      handleLocationError(true, infoWindow, map.getCenter());
+      center: {lat: -34.6037389, lng: -58.3837591},
+      zoom: 15
     });
-  } else {
-    // Browser doesn't support Geolocation
-    handleLocationError(false, infoWindow, map.getCenter());
-  }
-}
 
-function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+  
+  var infoWindow = new google.maps.InfoWindow({map: map});
+  var stepDisplay = new google.maps.InfoWindow;
+  // Try HTML5 geolocation.
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function(position) {
+        pos = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        };
+
+        infoWindow.setPosition(pos);
+        infoWindow.setContent('Location found.');
+        map.setCenter(pos);
+      }, function() {
+        handleLocationError(true, infoWindow, map.getCenter());
+      });
+    } else {
+      // Browser doesn't support Geolocation
+      handleLocationError(false, infoWindow, map.getCenter());
+    }
+  //}
+////////////////////////////////////////////////////////////
+/*
+
+  var latLngBuscar;
+  var directionsDisplay = new google.maps.DirectionsRenderer();
+  var directionsService = new google.maps.DirectionsService();
+    
+  
+
+    //debugger;
+    latLngDestino = {lat:-34.6037389, lng:58.3837591};
+  
+      latLngOrigin = {lat:-35.2432959, lng:-58.5918078};
+      
+      var request = {
+      origin: 'Chicago, IL',
+      destination: 'Los Angeles, CA',
+      travelMode: google.maps.TravelMode.DRIVING
+      
+      };
+      directionsService.route(request, function(result, status) {
+        if(status == google.maps.DirectionsStatus.OK) {
+          console.log(result);
+            directionsDisplay.setDirections(result);
+          }
+      });
+
+      
+    $timeout(function(){
+    //directionsDisplay = new google.maps.DirectionsRenderer();
+
+    directionsDisplay.setMap(map);
+  },2000);
+
+
+*/
+////////////////////////////////////////////////////////////
+function calculateAndDisplayRoute(directionsDisplay, directionsService,     
+  markerArray, stepDisplay, map) {      
+    // Remove any existing markers      
+    for (var i = 0; i < markerArray.length; i++) {      
+      markerArray[i].setMap(null);      
+    }
+  directionsService.route({
+      origin: "" + pos.lat + "," + pos.lng,
+      destination: posConsultorio,
+      travelMode: 'WALKING'
+    }, function(response, status) {
+
+      if (status === 'OK') {
+        directionsDisplay.setDirections(response);
+        //showSteps(response, markerArray, stepDisplay, map);
+      } else {
+        window.alert('Directions request failed due to ' + status);
+      }
+    });
+
+}
+function attachInstructionText(stepDisplay, marker, text, map) {
+        google.maps.event.addListener(marker, 'click', function() {
+          // Open an info window when the marker is clicked on, containing the text
+          // of the step.
+          stepDisplay.setContent(text);
+          stepDisplay.open(map, marker);
+        });
+      }
+function showSteps(directionResult, markerArray, stepDisplay, map) {
+        // For each step, place a marker, and add the text to the marker's infowindow.
+        // Also attach the marker to an array so we can keep track of it and remove it
+        // when calculating new routes.
+        var myRoute = directionResult.routes[0].legs[0];
+        for (var i = 0; i < myRoute.steps.length; i++) {
+          var marker = markerArray[i] = markerArray[i] || new google.maps.Marker;
+          marker.setMap(map);
+          marker.setPosition(myRoute.steps[i].start_location);
+          attachInstructionText(
+              stepDisplay, marker, myRoute.steps[i].instructions, map);
+        }
+      }
+ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
   infoWindow.setPosition(pos);
   infoWindow.setContent(browserHasGeolocation ?
                         'Error: The Geolocation service failed.' :
                         'Error: Your browser doesn\'t support geolocation.');
 }
+var infoWindow = new google.maps.InfoWindow({map: map});
+var directionsDisplay = new google.maps.DirectionsRenderer({map: map});     
+$timeout(function(){
+calculateAndDisplayRoute(     
+          directionsDisplay, directionsService, markerArray, stepDisplay, map);
+},2000);
+
 
 
 	$scope.mapa = function(){
@@ -418,6 +511,11 @@ ServiceGrillaAdmin.getdoctores().then(function(respuesta){
     $scope.volver = function(){
       $state.go('registroTurnos');
     };
+
+    $scope.verMapa = function(){
+      $state.go('verMapa');
+    }
+
     $scope.gridOptions = {};
     $scope.gridOptions.paginationPageSizes = [25, 50, 75];
     $scope.gridOptions.paginationPageSize = 25;
@@ -432,7 +530,9 @@ ServiceGrillaAdmin.getdoctores().then(function(respuesta){
       //{ field: 'gender', visible: false},
       { field: 'horario'}*/
       {name:'fecha',fieldName:'Fecha'},
-      {name:'horario',fieldName:'Horario'}
+      {name:'horario',fieldName:'Horario'},
+      {name:'nombre_espec',fieldName:'Especialidad',displayName:'Especialidad'},
+      {name:'iconoMapa',displayName:'Ver Mapa',cellTemplate:"<center><div class='mapIcon' ng-click='grid.appScope.verMapa();'></div></center>", width:"120"}
     ],
     enableGridMenu: true,
     enableSelectAll: true,

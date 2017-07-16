@@ -160,3 +160,11 @@ div.radioDiv {
 	clear: both;
 	margin: 0 1px;
 }
+.mapIcon{
+	/*background-image: url('img/iconoMap.png');*/
+	background: url('img/iconoMap.png');
+	background-size: 50px 50px;
+    background-repeat: no-repeat;
+	height: 50px;
+	width: 50px;
+}

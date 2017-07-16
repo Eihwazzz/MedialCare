@@ -110,6 +110,14 @@ app.config(function($stateProvider, $urlRouterProvider, $authProvider) {
       'menuSuperior': {templateUrl: 'templates/menuSup.html',controller: 'menuSupCtrl'},
       'logout': {templateUrl: 'templates/logout.html', controller: 'logoutCtrl'}
     }
+  })
+    .state('verMapa', {
+    url: '/verMapa',
+    views: {
+      'principal': { templateUrl: 'templates/verEnMapa.html',controller: 'mapaCtrl' },
+      'menuSuperior': {templateUrl: 'templates/menuSup.html',controller: 'menuSupCtrl'},
+      'logout': {templateUrl: 'templates/logout.html', controller: 'logoutCtrl'}
+    }
   });
 
 
