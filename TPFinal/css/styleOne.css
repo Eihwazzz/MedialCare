@@ -74,10 +74,10 @@ div.logOut button.btn-calm{
 	height: 80%;
 	text-align: center;
 }
-canvas{
+/*canvas{
 	max-width: 75%;
 	max-height: 75%;
-}
+}*/
 div.tb1 div{
 	border-style: double;
 }
@@ -167,4 +167,10 @@ div.radioDiv {
     background-repeat: no-repeat;
 	height: 50px;
 	width: 50px;
+}
+#mapReal{
+	height: 100%;
+    float: left;
+    width: 70%;
+    height: 100%;
 }

@@ -54,12 +54,12 @@ angular.module('MyFinalWeb.MyController',[])
 })
 .controller('menuCtrl', function($scope, $auth, $state, $timeout) {
 	
-  var markerArray = []; 
+  /*var markerArray = []; 
   var directionsService = new google.maps.DirectionsService;
   var pos = {};
 
   var posConsultorio = "-34.803333,-58.4532453";
-
+*/
   $scope.solTurno = function(){
     $state.go('solicitarTurno');
   };
@@ -67,7 +67,7 @@ angular.module('MyFinalWeb.MyController',[])
   $scope.verTurnos = function(){
     $state.go('grillaTurnos');
   };
-  //$scope.initMap = function(){
+ /*
   var map = new google.maps.Map(document.getElementById('map'), {
       center: {lat: -34.6037389, lng: -58.3837591},
       zoom: 15
@@ -76,7 +76,7 @@ angular.module('MyFinalWeb.MyController',[])
   
   var infoWindow = new google.maps.InfoWindow({map: map});
   var stepDisplay = new google.maps.InfoWindow;
-  // Try HTML5 geolocation.
+  
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(function(position) {
         pos = {
@@ -91,9 +91,9 @@ angular.module('MyFinalWeb.MyController',[])
         handleLocationError(true, infoWindow, map.getCenter());
       });
     } else {
-      // Browser doesn't support Geolocation
+ 
       handleLocationError(false, infoWindow, map.getCenter());
-    }
+    }*/
   //}
 ////////////////////////////////////////////////////////////
 /*
@@ -132,7 +132,7 @@ angular.module('MyFinalWeb.MyController',[])
 
 */
 ////////////////////////////////////////////////////////////
-function calculateAndDisplayRoute(directionsDisplay, directionsService,     
+/*function calculateAndDisplayRoute(directionsDisplay, directionsService,     
   markerArray, stepDisplay, map) {      
     // Remove any existing markers      
     for (var i = 0; i < markerArray.length; i++) {      
@@ -192,7 +192,7 @@ calculateAndDisplayRoute(
 	$scope.mapa = function(){
     initMap();
   }
-
+*/
 	$scope.testPDF = function(){
 		//Or Use
 		//document.getElementById('tablaTurnos')
