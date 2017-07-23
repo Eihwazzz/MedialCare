@@ -685,6 +685,8 @@ ServiceGrillaAdmin.getdoctores().then(function(respuesta){
    
 })
 .controller('templateAltaCtrl',function($scope,ServiceCargadorDeFotos,$http,$auth,$state,FileUploader){
+  $scope.mostrarMapa = false;
+
 	//subirimagen
 	$scope.perfiles = [
       {name:'Seleccione',id:4},
@@ -735,7 +737,50 @@ ServiceGrillaAdmin.getdoctores().then(function(respuesta){
       alert('Seleccione un perfil por favor');
     }
   };
+  //MAPA
+  $scope.$watch('mostrarMapa', function(newValue, oldValue) {
+    if(newValue){
+      var directionsDisplay = new google.maps.DirectionsRenderer;
+      var pos = {};
+      if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function(position) {
+          pos = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude
+          };
+          var myLatLng = {lat: pos.lat, lng: pos.lng};
+          var map = new google.maps.Map(document.getElementById('mapPaciente'), {
+            zoom: 6,
+            center: myLatLng
+          });
+          var marker = new google.maps.Marker({
+            position: myLatLng,
+            map: map,
+            title: 'Location'
+          });
+          directionsDisplay.setMap(map);
+          console.log(pos);
+      }, function() {
+          handleLocationError(true, infoWindow, map.getCenter());
+        });
+      } else {
+        // Browser doesn't support Geolocation
+        handleLocationError(false, infoWindow, map.getCenter());
+      }
+    }
 
+  });
+  
+  
+  
+
+
+
+
+  $scope.openMap = function(){
+    $scope.myStyle = {'width':'50%'};
+    $scope.mostrarMapa = true;
+  };
 
 })
 
