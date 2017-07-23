@@ -10,7 +10,7 @@
 		<!--<div class="col-xs-2 col-md-2 col-lg-4 col-xs-offset-2 col-md-offset-2 col-lg-offset-4">-->
 		<select ng-options="perf.name as perf.name for perf in perfiles" ng-model="selectedUser" ng-change="opcionesTurnos()"></select>
 		</br>
-			<input type="search" placeholder="Buscar Opcion Elegida" ng-model="miFiltro"/>
+			<input type="search" placeholder="Buscar Opcion Elegida" style="display:block;" ng-model="miFiltro"/>
 			<table ng-if="selectedUser == 'Doctores'" class='table table-hover table-responsive' id="listaOpciones">
 				<thead>
 					<tr>
@@ -59,7 +59,7 @@
 				</tr>
 				</tbody>
 			</table>
-			<table ng-if="selectedUser == 'Especialidades'" class='table table-hover table-responsive' id="listaOpciones">
+			<table ng-if="selectedUser == 'Especialidades'" class='table table-hover table-responsive tabla-especialidades col-xs-8 col-md-6 col-lg-6 col-xs-offset-0 col-md-offset-0 col-lg-offset-0' id="listaOpciones">
 				<thead>
 					<tr>
 						<th>  Especialidad   </th>				
