@@ -686,7 +686,8 @@ ServiceGrillaAdmin.getdoctores().then(function(respuesta){
 })
 .controller('templateAltaCtrl',function($scope,ServiceCargadorDeFotos,$http,$auth,$state,FileUploader){
   $scope.mostrarMapa = false;
-
+  $scope.domicilio = {};
+  $scope.domPaciente = {};
 	//subirimagen
 	$scope.perfiles = [
       {name:'Seleccione',id:4},
@@ -738,6 +739,11 @@ ServiceGrillaAdmin.getdoctores().then(function(respuesta){
     }
   };
   //MAPA
+  var geocoder = new google.maps.Geocoder();
+  var map;
+  var marker;
+  var markersArray = [];
+
   $scope.$watch('mostrarMapa', function(newValue, oldValue) {
     if(newValue){
       var directionsDisplay = new google.maps.DirectionsRenderer;
@@ -749,15 +755,17 @@ ServiceGrillaAdmin.getdoctores().then(function(respuesta){
             lng: position.coords.longitude
           };
           var myLatLng = {lat: pos.lat, lng: pos.lng};
-          var map = new google.maps.Map(document.getElementById('mapPaciente'), {
-            zoom: 6,
+          map = new google.maps.Map(document.getElementById('mapPaciente'), {
+            zoom: 8,
             center: myLatLng
           });
-          var marker = new google.maps.Marker({
+
+          marker = new google.maps.Marker({
             position: myLatLng,
             map: map,
             title: 'Location'
           });
+          markersArray.push(marker);
           directionsDisplay.setMap(map);
           console.log(pos);
       }, function() {
@@ -767,6 +775,39 @@ ServiceGrillaAdmin.getdoctores().then(function(respuesta){
         // Browser doesn't support Geolocation
         handleLocationError(false, infoWindow, map.getCenter());
       }
+    }
+
+    
+
+    function clearOverlays() {
+      for (var i = 0; i < markersArray.length; i++ ) {
+        markersArray[i].setMap(null);
+      }
+      markersArray.length = 0;
+    }
+
+    function geocodeAddress(geocoder, resultsMap) {
+      var address = $scope.domicilio.calle + " " + $scope.domicilio.numero + ", " + $scope.domicilio.localidad + ", " + $scope.domicilio.provincia;
+      geocoder.geocode({'address': address}, function(results, status) {
+        if (status === 'OK') {
+          clearOverlays();
+          resultsMap.setCenter(results[0].geometry.location);
+          marker = new google.maps.Marker({
+            map: resultsMap,
+            position: results[0].geometry.location
+          });
+          markersArray.push(marker);
+          $scope.domPaciente.latitud = results[0].geometry.location.lat();
+          $scope.domPaciente.longitud = results[0].geometry.location.lng();
+          console.log($scope.domPaciente);
+        } else {
+          alert('Geocode was not successful for the following reason: ' + status);
+        }
+      });
+    }
+
+    $scope.buscarDomicilio = function(){
+      geocodeAddress(geocoder, map);
     }
 
   });

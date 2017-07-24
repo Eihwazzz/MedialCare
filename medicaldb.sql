@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 19-07-2017 a las 02:39:56
+-- Tiempo de generación: 24-07-2017 a las 03:03:01
 -- Versión del servidor: 10.1.24-MariaDB
 -- Versión de PHP: 7.1.6
 
@@ -165,18 +165,21 @@ CREATE TABLE `pacientes` (
   `clave` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
   `dni` varchar(11) COLLATE utf8_unicode_ci NOT NULL,
   `domicilio` varchar(60) COLLATE utf8_unicode_ci NOT NULL,
-  `foto` varchar(60) COLLATE utf8_unicode_ci NOT NULL
+  `foto` varchar(60) COLLATE utf8_unicode_ci NOT NULL,
+  `latitud` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `longitud` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Volcado de datos para la tabla `pacientes`
 --
 
-INSERT INTO `pacientes` (`id_paciente`, `nombre`, `apellido`, `fechaNac`, `mail`, `clave`, `dni`, `domicilio`, `foto`) VALUES
-(1, 'Marcos', 'Perlin', '1976-06-09', 'marcos@gmail.com.ar', '1234', '28325652', 'Peralta 243', 'pordefecto.png'),
-(2, 'Pedro1', '', '0000-00-00', 'Pedro4532423425@hotmail.com', '1234', '', '', 'pordefecto.png'),
-(3, 'MarianoLean', '', '0000-00-00', 'leanM@hotmail.com', '1234', '', '', 'pordefecto.png'),
-(4, 'Eliana', '', '0000-00-00', 'ElianaDorpe@hotmail.com', '1234', '', '', 'Penguins.jpg');
+INSERT INTO `pacientes` (`id_paciente`, `nombre`, `apellido`, `fechaNac`, `mail`, `clave`, `dni`, `domicilio`, `foto`, `latitud`, `longitud`) VALUES
+(1, 'Marcos', 'Perlin', '1976-06-09', 'marcos@gmail.com.ar', '1234', '28325652', 'Peralta 243', 'pordefecto.png', '-34.7019099', '-58.3791374'),
+(2, 'Pedro1', '', '0000-00-00', 'Pedro4532423425@hotmail.com', '1234', '', '', 'pordefecto.png', '-34.6583448', '-58.373093'),
+(3, 'MarianoLean', '', '0000-00-00', 'leanM@hotmail.com', '1234', '', '', 'pordefecto.png', '-34.6044134', '-58.3753192'),
+(4, 'Eliana', '', '0000-00-00', 'ElianaDorpe@hotmail.com', '1234', '', '', 'Penguins.jpg', '-34.6153584', '-58.3834173'),
+(5, 'Mariano', '', '0000-00-00', 'example@hotmail.com', '1234', '', '', 'pordefecto.png', '-34.7364053', '-58.2965294');
 
 -- --------------------------------------------------------
 
@@ -327,7 +330,7 @@ ALTER TABLE `horarios`
 -- AUTO_INCREMENT de la tabla `pacientes`
 --
 ALTER TABLE `pacientes`
-  MODIFY `id_paciente` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_paciente` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT de la tabla `turnos`
 --

@@ -175,9 +175,17 @@ div.radioDiv {
     height: 100%;
 }
 #mapPaciente{
+	margin: auto;
     width: 50%;
     height: 70%;
 }
 .tabla-especialidades{
 	width: auto !important;
+}
+.formMapa{
+	float:left;
+	display:grid;
+}
+.input-mapa{
+	margin-bottom: 10px;
 }
