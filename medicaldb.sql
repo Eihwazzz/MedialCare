@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 24-07-2017 a las 03:03:01
+-- Tiempo de generación: 25-07-2017 a las 02:53:15
 -- Versión del servidor: 10.1.24-MariaDB
 -- Versión de PHP: 7.1.6
 
@@ -72,15 +72,38 @@ CREATE TABLE `doctores` (
   `clave` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
   `fechaNac` date NOT NULL,
   `foto` varchar(60) COLLATE utf8_unicode_ci NOT NULL,
-  `telefono` int(15) NOT NULL DEFAULT '42504000'
+  `telefono` int(15) NOT NULL DEFAULT '42504000',
+  `latitud` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `longitud` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Volcado de datos para la tabla `doctores`
 --
 
-INSERT INTO `doctores` (`cod_doctor`, `nombre`, `apellido`, `mail`, `dni`, `clave`, `fechaNac`, `foto`, `telefono`) VALUES
-(1, 'Roberto', 'Gladores', 'roberto@hotmail.com', '24435654', '1234', '1973-07-20', 'doctor.png', 42504000);
+INSERT INTO `doctores` (`cod_doctor`, `nombre`, `apellido`, `mail`, `dni`, `clave`, `fechaNac`, `foto`, `telefono`, `latitud`, `longitud`) VALUES
+(1, 'Roberto', 'Gladores', 'roberto@hotmail.com', '24435654', '1234', '1973-07-20', 'doctor.png', 42504000, '-34.6750806', '-58.3515754');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `entidad`
+--
+
+CREATE TABLE `entidad` (
+  `id_empresa` int(4) NOT NULL,
+  `nombre_empresa` varchar(50) NOT NULL,
+  `telefono` varchar(15) NOT NULL,
+  `latitud` varchar(50) NOT NULL,
+  `longitud` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `entidad`
+--
+
+INSERT INTO `entidad` (`id_empresa`, `nombre_empresa`, `telefono`, `latitud`, `longitud`) VALUES
+(1, 'Medical Care', '01142451542', '-34.6586849', '-58.3723948');
 
 -- --------------------------------------------------------
 
@@ -179,7 +202,8 @@ INSERT INTO `pacientes` (`id_paciente`, `nombre`, `apellido`, `fechaNac`, `mail`
 (2, 'Pedro1', '', '0000-00-00', 'Pedro4532423425@hotmail.com', '1234', '', '', 'pordefecto.png', '-34.6583448', '-58.373093'),
 (3, 'MarianoLean', '', '0000-00-00', 'leanM@hotmail.com', '1234', '', '', 'pordefecto.png', '-34.6044134', '-58.3753192'),
 (4, 'Eliana', '', '0000-00-00', 'ElianaDorpe@hotmail.com', '1234', '', '', 'Penguins.jpg', '-34.6153584', '-58.3834173'),
-(5, 'Mariano', '', '0000-00-00', 'example@hotmail.com', '1234', '', '', 'pordefecto.png', '-34.7364053', '-58.2965294');
+(5, 'Mariano', '', '0000-00-00', 'example@hotmail.com', '1234', '', '', 'pordefecto.png', '-34.7364053', '-58.2965294'),
+(6, 'Mercedes', '', '0000-00-00', 'platerodos@hotmail.com', '1234', '', '', 'invitado.jpg', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -200,18 +224,6 @@ CREATE TABLE `turnos` (
 --
 
 INSERT INTO `turnos` (`id_turno`, `cod_doctor`, `id_paciente`, `fecha`, `horario`) VALUES
-(1, 1, 1, '0000-00-00', '00:00:18'),
-(2, 1, 1, '0000-00-00', '00:00:18'),
-(3, 1, 1, '0000-00-00', '00:00:19'),
-(4, 1, 1, '0000-00-00', '00:00:19'),
-(5, 1, 1, '0000-00-00', '00:00:16'),
-(6, 1, 1, '2017-07-08', '00:00:16'),
-(7, 1, 1, '2017-07-28', '00:00:16'),
-(8, 1, 1, '2017-07-25', '00:00:16'),
-(9, 1, 1, '2017-07-27', '00:00:17'),
-(10, 1, 1, '2017-07-19', '00:00:19'),
-(11, 1, 1, '2017-07-19', '00:00:19'),
-(12, 1, 1, '2017-08-02', '00:00:16'),
 (13, 1, 1, '2017-08-10', '17:00:00'),
 (14, 1, 1, '2017-08-18', '17:00:00');
 
@@ -262,6 +274,12 @@ ALTER TABLE `disp_med`
 --
 ALTER TABLE `doctores`
   ADD PRIMARY KEY (`cod_doctor`);
+
+--
+-- Indices de la tabla `entidad`
+--
+ALTER TABLE `entidad`
+  ADD PRIMARY KEY (`id_empresa`);
 
 --
 -- Indices de la tabla `especialidades`
@@ -317,6 +335,11 @@ ALTER TABLE `administradores`
 ALTER TABLE `doctores`
   MODIFY `cod_doctor` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
+-- AUTO_INCREMENT de la tabla `entidad`
+--
+ALTER TABLE `entidad`
+  MODIFY `id_empresa` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+--
 -- AUTO_INCREMENT de la tabla `especialidades`
 --
 ALTER TABLE `especialidades`
@@ -330,7 +353,7 @@ ALTER TABLE `horarios`
 -- AUTO_INCREMENT de la tabla `pacientes`
 --
 ALTER TABLE `pacientes`
-  MODIFY `id_paciente` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_paciente` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT de la tabla `turnos`
 --
