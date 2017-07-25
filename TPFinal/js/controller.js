@@ -702,8 +702,8 @@ ServiceGrillaAdmin.getdoctores().then(function(respuesta){
 	$scope.perfilSeleccionado = 'Seleccione';
 	
 	$scope.uploader = new FileUploader({url: '../TPFinalServices/Datos/index.php/subirimagen'});
-  	$scope.uploader.queueLimit = 1; 
-  	$scope.persona={};
+	$scope.uploader.queueLimit = 1; 
+	$scope.persona={};
 	$scope.persona.nombre= "Mariano" ;
 	$scope.persona.clave= "1234" ;
 	$scope.persona.mail= "example@hotmail.com" ;
@@ -711,7 +711,13 @@ ServiceGrillaAdmin.getdoctores().then(function(respuesta){
   	ServiceCargadorDeFotos.cargarFoto($scope.persona.foto,$scope.uploader);
 
   	$scope.uploader.onSuccessItem = function(item, response, status, headers) {
-  		console.info(item,response,status,headers);
+  	console.info(item,response,status,headers);
+    if($scope.perfilSeleccionado === 2 || $scope.perfilSeleccionado === 3){
+      if($scope.domPaciente){
+        $scope.persona.latitud = $scope.domPaciente.latitud;
+        $scope.persona.longitud = $scope.domPaciente.longitud;
+      }
+    }
     $http.post('../TPFinalServices/Datos/index.php/insertarusuario',{usuario:$scope.persona,perfil:$scope.perfilSeleccionado})
       	.then(function(respuesta) {       
         console.log("Respuesta: "+respuesta.data);  
@@ -739,13 +745,14 @@ ServiceGrillaAdmin.getdoctores().then(function(respuesta){
     }
   };
   //MAPA
-  var geocoder = new google.maps.Geocoder();
-  var map;
-  var marker;
-  var markersArray = [];
+  
 
   $scope.$watch('mostrarMapa', function(newValue, oldValue) {
     if(newValue){
+      var geocoder = new google.maps.Geocoder();
+      var map;
+      var marker;
+      var markersArray = [];
       var directionsDisplay = new google.maps.DirectionsRenderer;
       var pos = {};
       if (navigator.geolocation) {

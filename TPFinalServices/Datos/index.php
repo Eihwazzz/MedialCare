@@ -55,12 +55,12 @@ $app->post('/insertarusuario[/]', function($request, $response, $args) {
         $json = json_encode( $answer );
         return $json;    
     }else if($input->perfil == 'Paciente'){
-        $ultimoId = Paciente::InsertarPaciente($input->usuario);
+        $ultimoId = Paciente::InsertarPacienteConDomicilio($input->usuario);
         $answer = array( 'answer' => 'Paciente Ingresado!' );
         $json = json_encode( $answer );
         return $json;
     }else if($input->perfil == 'Doctor'){
-        $ultimoId = Doctor::InsertarDoctor($input->usuario);
+        $ultimoId = Doctor::InsertarDoctorConDomicilio($input->usuario);
         $answer = array( 'answer' => 'Doctor Ingresado!' );
         $json = json_encode( $answer );
         return $json;

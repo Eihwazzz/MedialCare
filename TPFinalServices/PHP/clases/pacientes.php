@@ -123,6 +123,23 @@ class Paciente
 		return $objetoAccesoDato->RetornarUltimoIdInsertado();
 	
 				
+	}
+
+	public static function InsertarPacienteConDomicilio($persona)
+	{
+		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
+		$consulta =$objetoAccesoDato->RetornarConsulta("INSERT into pacientes (nombre,mail,clave,foto,latitud,longitud)values(:nombre,:mail,:clave,:foto,:latitud,:longitud)");
+		//$consulta =$objetoAccesoDato->RetornarConsulta("CALL InsertarPersona (:nombre,:apellido,:dni,:foto)");
+		$consulta->bindValue(':nombre',$persona->nombre, PDO::PARAM_STR);
+		$consulta->bindValue(':mail', $persona->mail, PDO::PARAM_STR);
+		$consulta->bindValue(':clave', $persona->clave, PDO::PARAM_STR);
+		$consulta->bindValue(':foto', $persona->foto, PDO::PARAM_STR);
+		$consulta->bindValue(':latitud', $persona->latitud, PDO::PARAM_STR);
+		$consulta->bindValue(':longitud', $persona->longitud, PDO::PARAM_STR);
+		$consulta->execute();		
+		return $objetoAccesoDato->RetornarUltimoIdInsertado();
+	
+				
 	}	
 
         public static function ModificarPaciente($paciente)
