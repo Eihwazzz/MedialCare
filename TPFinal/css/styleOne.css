@@ -189,3 +189,9 @@ div.radioDiv {
 .input-mapa{
 	margin-bottom: 10px;
 }
+.turno-asistido{
+	color:#01DF01;
+}
+.turno-no-asistido{
+	color:#FE2E2E;
+}

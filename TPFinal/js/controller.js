@@ -532,6 +532,16 @@ ServiceGrillaAdmin.getdoctores().then(function(respuesta){
       {name:'fecha',fieldName:'Fecha'},
       {name:'horario',fieldName:'Horario'},
       {name:'nombre_espec',fieldName:'Especialidad',displayName:'Especialidad'},
+      //{name:'asistido',fieldName:'Asistido',displayName:'Asistido',cellTemplate:"<center><div ng-class='{{row.entity.asistido}} ? 'turno-asistido' : 'turno-no-asistido''>{{row.entity.asistido ? 'Asistido' : 'No Asistido'}}</div></center>", width:"120"},
+      {name:'asistido',fieldName:'Asistido',displayName:'Asistido', width:"120",
+          cellTemplate:"<center><div>{{row.entity.asistido ? 'Asistido' : 'No Asistido'}}</div></center>",
+          cellClass: function(grid, row, col, rowRenderIndex, colRenderIndex) {
+          if (grid.getCellValue(row,col) == 1) {
+            return 'turno-asistido';
+          }
+          return 'turno-no-asistido';
+        }
+      },
       {name:'iconoMapa',displayName:'Ver Mapa',cellTemplate:"<center><div class='mapIcon' ng-click='grid.appScope.verMapa();'></div></center>", width:"120"}
     ],
     enableGridMenu: true,
