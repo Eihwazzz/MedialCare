@@ -412,7 +412,7 @@ calculateAndDisplayRoute(
 		      	}else if(payload.perfil === 'Paciente'){
 		      		$state.go('menu');
 		      	}else if(payload.perfil === 'Doctor'){
-		      		$state.go('menu');
+		      		$state.go('menuDoctores');
 		      	}else{
 		      		$state.go('menu');
 		      	}
@@ -488,7 +488,7 @@ ServiceGrillaAdmin.getdoctores().then(function(respuesta){
     {
       $state.go('login');
     }
-
+    var payload = $auth.getPayload();
     /*
     $scope.gridOptions = {};
     $scope.gridOptions.paginationPageSizes = [25, 50, 75];
@@ -509,7 +509,12 @@ ServiceGrillaAdmin.getdoctores().then(function(respuesta){
     */
 
     $scope.volver = function(){
-      $state.go('registroTurnos');
+      if(payload.perfil === 'Paciente'){
+        $state.go('menu');  
+      }
+      if(payload.perfil === 'Doctor'){
+        $state.go('menuDoctores');  
+      }
     };
 
     $scope.verMapa = function(idDoctor){
@@ -570,7 +575,7 @@ ServiceGrillaAdmin.getdoctores().then(function(respuesta){
   };
   $scope.gridOptions.exporterCsvColumnSeparator = ';';
     $scope.mostrarTurnos = function(){
-      var payload = $auth.getPayload();
+      
       console.log($auth);
     	ServiceGrillaTurnos.getturnos({id:payload.id, perfil:payload.perfil}).then(function(respuesta){
     		$scope.ListadoTurnos = respuesta;

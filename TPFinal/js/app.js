@@ -118,6 +118,14 @@ app.config(function($stateProvider, $urlRouterProvider, $authProvider) {
       'menuSuperior': {templateUrl: 'templates/menuSup.html',controller: 'menuSupCtrl'},
       'logout': {templateUrl: 'templates/logout.html', controller: 'logoutCtrl'}
     }
+  })
+    .state('menuDoctores', {
+    url: '/menuDoctores',
+    views: {
+      'principal': { templateUrl: 'templates/menuDoctores.html',controller: 'doctoresCtrl' },
+      'menuSuperior': {templateUrl: 'templates/menuSup.html',controller: 'menuSupCtrl'},
+      'logout': {templateUrl: 'templates/logout.html', controller: 'logoutCtrl'}
+    }
   });
 
 
