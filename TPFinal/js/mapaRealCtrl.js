@@ -1,13 +1,13 @@
 var myApp = angular.module('MyFinalWeb');
 
-myApp.controller('mapaRealCtrl',function($scope,$http,$auth,$state, $timeout, $q){
+myApp.controller('mapaRealCtrl',function($scope,$http,$auth,$state, $timeout, $q, srvDoctores, $stateParams){
 
 	if(!$auth.isAuthenticated()){
       $state.go('login');
     }
 
+
     var pos = {};
-    var posConsultorio = "-34.6989701,-58.3823258";
     var map;
     
         var directionsService = new google.maps.DirectionsService;
@@ -39,21 +39,26 @@ myApp.controller('mapaRealCtrl',function($scope,$http,$auth,$state, $timeout, $q
 	  function calculateAndDisplayRoute(directionsService, directionsDisplay) {
 
 	  	
-
-	    directionsService.route({
-	      origin: pos.lat + "," + pos.lng,
-	      destination: posConsultorio,
-	      optimizeWaypoints: true,
-	      travelMode: 'DRIVING'
-	    }, function(response, status) {
-	      if (status === 'OK') {
-	        directionsDisplay.setDirections(response);
-	        
-	      } else {
-	        window.alert('Directions request failed due to ' + status);
-	      }
-	    });
-
+	  	srvDoctores.traerDomicilioDoctor($stateParams.idDoctor)
+	    .then(function(respuesta){
+	    	console.log(respuesta);
+	    	$scope.latitudDoctor = respuesta.data.latitud;
+	    	$scope.longitudDoctor = respuesta.data.longitud;
+	    	var posConsultorio = $scope.latitudDoctor + "," + $scope.longitudDoctor;
+	    	directionsService.route({
+		      origin: pos.lat + "," + pos.lng,
+		      destination: posConsultorio,
+		      optimizeWaypoints: true,
+		      travelMode: 'DRIVING'
+		    }, function(response, status) {
+		      if (status === 'OK') {
+		        directionsDisplay.setDirections(response);
+		        
+		      } else {
+		        window.alert('Directions request failed due to ' + status);
+		      }
+		    });
+	    })
 	  }
 	    $timeout(function() {
 	      calculateAndDisplayRoute(directionsService, directionsDisplay);

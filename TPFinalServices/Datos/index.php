@@ -204,7 +204,10 @@ $app->get('/getespecialidades[/]', function ($request, $response, $args) {
     //$response->write("Monstrar los CDS");
     //return $response;
 });
-
+$app->get('/traerDomicilioDoctor[/{id}]', function ($request, $response, $args) {
+    $domicilio = Doctor::TraerDomicilioDoctor($args['id']);
+    return json_encode($domicilio);
+});
 
 /**
  * Step 4: Run the Slim application

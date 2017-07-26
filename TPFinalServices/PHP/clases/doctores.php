@@ -139,6 +139,17 @@ class Doctor
 				
 	}	
 
+	public static function TraerDomicilioDoctor($id) {	
+
+		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
+		$consulta =$objetoAccesoDato->RetornarConsulta("select latitud,longitud from doctores where cod_doctor=:id");
+		$consulta->bindValue(':id',$id, PDO::PARAM_INT);
+		$consulta->execute();
+		$personaBuscada= $consulta->fetchObject('doctor');
+		return $personaBuscada;	
+					
+	}
+
 	public static function InsertarDoctorConDomicilio($persona)
 	{
 		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 

@@ -512,8 +512,8 @@ ServiceGrillaAdmin.getdoctores().then(function(respuesta){
       $state.go('registroTurnos');
     };
 
-    $scope.verMapa = function(){
-      $state.go('verMapa');
+    $scope.verMapa = function(idDoctor){
+      $state.go('verMapa',{idDoctor:idDoctor});
     }
 
     $scope.gridOptions = {};
@@ -542,7 +542,7 @@ ServiceGrillaAdmin.getdoctores().then(function(respuesta){
           return 'turno-no-asistido';
         }
       },
-      {name:'iconoMapa',displayName:'Ver Mapa',cellTemplate:"<center><div class='mapIcon' ng-click='grid.appScope.verMapa();'></div></center>", width:"120"}
+      {name:'iconoMapa',displayName:'Ver Mapa',cellTemplate:"<center><div class='mapIcon' ng-click='grid.appScope.verMapa(row.entity.cod_doctor);'></div></center>", width:"120"}
     ],
     enableGridMenu: true,
     enableSelectAll: true,
@@ -648,6 +648,7 @@ ServiceGrillaAdmin.getdoctores().then(function(respuesta){
   });*/
     $scope.modificar2 = function(usuario){
       console.log(usuario);
+      debugger;
       if(usuario.id_administrador !== undefined){
           $state.go('modificar',{id:usuario.id_administrador,nombre:usuario.nombre,mail:usuario.mail,clave:usuario.clave,foto:usuario.foto,perfil:'administrador'});
         }
@@ -917,6 +918,11 @@ ServiceGrillaAdmin.getdoctores().then(function(respuesta){
     }
     $scope.uploader.uploadAll();
   };
+})
+
+.controller('templateModificarCtrl', function($scope, $http, $state,FileUploader,$stateParams,ServiceCargadorDeFotos,ServiceModificarAdministrador,ServiceModificarDoctor,ServiceModificarPaciente) {
+
+
 })
 
 .service('ServiceCargadorDeFotos', function($http, FileUploader){

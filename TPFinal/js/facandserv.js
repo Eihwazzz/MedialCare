@@ -230,3 +230,19 @@ app.service('ServiceModificarDoctor', function($http,$q){
     modificarDoctor: modificar
   };
 });
+app.service('srvDoctores', function($http,$q){
+  var traerDomDoctor = function(idDoctor){
+  var defer = $q.defer();
+    $http.get('../TPFinalServices/Datos/index.php/traerDomicilioDoctor/'+idDoctor)
+      .then(function(response){
+        console.log(response);
+          defer.resolve(response);
+      },function(response) {
+            defer.reject(response);
+      });
+          return defer.promise;
+    };
+  return{
+    traerDomicilioDoctor: traerDomDoctor
+  };
+});
