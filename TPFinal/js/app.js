@@ -62,13 +62,13 @@ app.config(function($stateProvider, $urlRouterProvider, $authProvider) {
     },
     url:'/solicitudDeTurno/:id'
   })
-.state('registroTurnos', {
+.state('menuAdmin', {
     views: {
       'principal': { templateUrl: 'templates/menuAdmin.html',controller: 'menuAdminCtrl' },
       'menuSuperior': {templateUrl: 'templates/menuSup.html',controller: 'menuSupCtrl'},
       'logout': {templateUrl: 'templates/logout.html', controller: 'logoutCtrl'}
     },
-    url:'/registroTurnos'
+    url:'/menuAdmin'
   })
   .state('gestionDeUsuarios', {
     url: '/gestionDeUsuarios',
@@ -123,6 +123,22 @@ app.config(function($stateProvider, $urlRouterProvider, $authProvider) {
     url: '/menuDoctores',
     views: {
       'principal': { templateUrl: 'templates/menuDoctores.html',controller: 'doctoresCtrl' },
+      'menuSuperior': {templateUrl: 'templates/menuSup.html',controller: 'menuSupCtrl'},
+      'logout': {templateUrl: 'templates/logout.html', controller: 'logoutCtrl'}
+    }
+  })
+    .state('estadisticas', {
+    url: '/estadisticas',
+    views: {
+      'principal': { templateUrl: 'templates/estadisticas.html',controller: 'estadisticasCtrl' },
+      'menuSuperior': {templateUrl: 'templates/menuSup.html',controller: 'menuSupCtrl'},
+      'logout': {templateUrl: 'templates/logout.html', controller: 'logoutCtrl'}
+    }
+  })
+    .state('estadisticasEspecialidades', {
+    url: '/estadisticasEspecialidades',
+    views: {
+      'principal': { templateUrl: 'templates/estadisticasEspecialidades.html',controller: 'estadisticasEspecialidadesCtrl' },
       'menuSuperior': {templateUrl: 'templates/menuSup.html',controller: 'menuSupCtrl'},
       'logout': {templateUrl: 'templates/logout.html', controller: 'logoutCtrl'}
     }

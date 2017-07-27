@@ -195,3 +195,11 @@ div.radioDiv {
 .turno-no-asistido{
 	color:#FE2E2E;
 }
+.menu-admin{height: 296px;}
+.menu-admin img{height: 100%;}
+.containerEstadisticas {
+    min-width: 310px;
+    max-width: 800px;
+    height: 400px;
+    margin: 0 auto
+}

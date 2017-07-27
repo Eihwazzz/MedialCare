@@ -408,7 +408,7 @@ calculateAndDisplayRoute(
 		      	var payload = $auth.getPayload();
 		      	console.log(payload);
 		      	if(payload.perfil === 'Administrador'){
-		      		$state.go('registroTurnos');
+		      		$state.go('menuAdmin');
 		      	}else if(payload.perfil === 'Paciente'){
 		      		$state.go('menu');
 		      	}else if(payload.perfil === 'Doctor'){
@@ -449,6 +449,15 @@ calculateAndDisplayRoute(
     {
       $state.go('login');
     }
+
+    $scope.verGraficoLineal = function(){
+      $state.go('estadisticas');
+    };
+
+    $scope.verGraficoCircular = function(){
+      $state.go('estadisticasEspecialidades');
+    }
+
     $scope.gestionarUsuarios = function(){
     	$state.go('gestionDeUsuarios');
     };
@@ -466,9 +475,10 @@ ServiceGrillaAdmin.getpacientes().then(function(respuesta){
     if(!$auth.isAuthenticated())
     {
       $state.go('login');
-    }
+    };
+
     $scope.volver = function(){
-      $state.go('registroTurnos');
+      $state.go('menuAdmin');
     };
     //console.log(FactoryGrillaAdmin.obtenerAdministradores);
    ServiceGrillaAdmin.getadmins().then(function(respuesta){

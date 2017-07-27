@@ -1,10 +1,22 @@
 <div class="container">
 	
-	<div class="row">
-		<div class="col-xs-8 col-md-6 col-lg-4 col-xs-offset-2 col-md-offset-3 col-lg-offset-4">
-			<img class="gestionDeUsuarios" src="css/img/gestionDeUsuarios.jpg" alt="Gestion de Usuarios">
+	<div class="row" style="display:inline-block;">
+		<div class="col-xs-4 col-md-4 col-lg-4 menu-admin">
+			<img class="gestionDeUsuarios" src="css/img/estadisticas.jpg" alt="Estadisticas de turnos">
+			<button class="btn btn-warning btnGestionDeUsuarios" ng-click="verGraficoLineal()">
+				Estadisticas de turnos
+			</button>
+		</div>
+		<div class="col-xs-4 col-md-4 col-lg-4 menu-admin">
+			<img class="gestionDeUsuarios" src="css/img/estadisticasCircular.png" alt="Estadisticas de especialidades">
+			<button class="btn btn-warning btnGestionDeUsuarios" ng-click="verGraficoCircular()">
+				Estadisticas de especialidades
+			</button>
+		</div>
+		<div class="col-xs-4 col-md-4 col-lg-4 menu-admin">
+			<img class="gestionDeUsuarios" src="css/img/gestionDeUsuarios.jpg" alt="Gestion de usuarios">
 			<button class="btn btn-warning btnGestionDeUsuarios" ng-click="gestionarUsuarios()">
-				Gestionar Usuarios
+				Gestion de usuarios
 			</button>
 		</div>
 	</div>
