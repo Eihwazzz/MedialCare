@@ -1,23 +1,32 @@
-app.controller('estadisticasCtrl',function($scope,$http,$auth,$state){
+app.controller('estadisticasCtrl',function($scope,$http,$auth,$state,srvTurnos){
     
     if(!$auth.isAuthenticated()){
       $state.go('login');
     }
+    var contadoresPorMes = [];
+    srvTurnos.traerTurnos()
+    .then(function(data){
+      console.log(data);
+      for(var i=0;i<data.length;++i){
+        //fechas.push(data[i].fecha.substring(5,7));
 
+      }
+      console.log(contadoresPorMes);  
+    })
 
       Highcharts.chart('containerEsdisticasGrafico', {
 
       title: {
-          text: 'Cantidad de Productos al iniciar el año'
+          text: 'Cantidad de turnos mensuales'
       },
 
       subtitle: {
-          text: 'Ultimos 5 años'
+          text: 'Ultimo año'
       },
 
       yAxis: {
           title: {
-              text: 'Cantidad de productos'
+              text: 'Cantidad de turnos'
           }
       },
       legend: {
@@ -28,22 +37,22 @@ app.controller('estadisticasCtrl',function($scope,$http,$auth,$state){
 
       plotOptions: {
           series: {
-              pointStart: 7-4
+              pointStart: 2017
           }
       },
 
       series: [{
           name: 'Chango Plus',
-          data: 432
+          data: [432,432,333,654]
       }, {
           name: 'Chango Max',
-          data: 654
+          data: [432,122,142,234]
       }, {
           name: 'Chango Plex',
-          data: 123
+          data: [654,432,543,654]
       }, {
           name: 'Chango Lets',
-          data: 234
+          data: [765,876,234,543]
       }]
 
     });

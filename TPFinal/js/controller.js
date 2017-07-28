@@ -264,7 +264,7 @@ calculateAndDisplayRoute(
   };
 
 })
-.controller('solicitudDeTurnoCtrl', function($scope, $http, $auth, $stateParams, $state, ServiceTraerDoctoresTurnos, ServiceTraerDoctorPorId, ServiceGuardarTurno, $filter) {
+.controller('solicitudDeTurnoCtrl', function($scope, $http, $auth, $stateParams, $state, ServiceTraerDoctoresTurnos, ServiceTraerDoctorPorId, ServiceGuardarTurno, $filter,ServiceTraerEspecialidades) {
   if(!$auth.isAuthenticated())
     {
       $state.go('login');
@@ -273,6 +273,13 @@ calculateAndDisplayRoute(
       $state.go('solicitarTurno');
     };
     $scope.turno = {};
+    ServiceTraerEspecialidades.getEspecialidad($stateParams.id)
+    .then(function(respuesta){
+      console.log(respuesta);
+      $scope.especialidad = respuesta.nombre_espec;
+    })
+
+
     //console.log($stateParams.id);
     var payload = $auth.getPayload();
     console.log(payload.id);
@@ -286,6 +293,7 @@ calculateAndDisplayRoute(
       console.log($scope.turno);
       $scope.turnoAEnviar = angular.copy($scope.turno);
       $scope.turnoAEnviar.hora = $scope.turnoAEnviar.hora + ':00:00';
+      $scope.turnoAEnviar.nombreEspec = $scope.especialidad;
       alert(typeof $scope.turno.fecha);
       
       ServiceGuardarTurno.guardarTurno($scope.turnoAEnviar).then(function(respuesta){
@@ -499,6 +507,7 @@ ServiceGrillaAdmin.getdoctores().then(function(respuesta){
       $state.go('login');
     }
     var payload = $auth.getPayload();
+    var fechaDeHoy = new Date();
     /*
     $scope.gridOptions = {};
     $scope.gridOptions.paginationPageSizes = [25, 50, 75];
@@ -608,6 +617,7 @@ ServiceGrillaAdmin.getdoctores().then(function(respuesta){
 			{name:'Paciente', id:3},
 			{name:'Seleccione',id:4}
 		  ];
+
       /*TESTO DE ALGO
       $scope.selection = {
         ids:{1:true}
@@ -710,21 +720,44 @@ ServiceGrillaAdmin.getdoctores().then(function(respuesta){
  	 });*/
    
 })
-.controller('templateAltaCtrl',function($scope,ServiceCargadorDeFotos,$http,$auth,$state,FileUploader){
-  $scope.mostrarMapa = false;
-  $scope.domicilio = {};
-  $scope.domPaciente = {};
-	//subirimagen
-	$scope.perfiles = [
-      {name:'Seleccione',id:4},
-			{name:'Administrador', id:1},
-			{name:'Doctor', id:2},
-			{name:'Paciente', id:3}
-			//{name:'Invitado', id:4},
+.controller('templateAltaCtrl',function($scope,ServiceCargadorDeFotos,$http,$auth,$state,FileUploader,ServiceTraerEspecialidades){
+
+    if(!$auth.isAuthenticated())
+    {
+      $state.go('login');
+    }
+    $scope.perfilAdministrador = false;
+
+    var payload = $auth.getPayload();
+    console.log(payload);
+    if(payload.perfil === 'Administrador'){
+      $scope.perfilAdministrador = true;
+    }
+
+    $scope.mostrarMapa = false;
+    $scope.domicilio = {};
+    $scope.domPaciente = {};
+  	//subirimagen
+  	$scope.perfiles = [
+        {name:'Seleccione',id:4},
+  			{name:'Administrador', id:1},
+  			{name:'Doctor', id:2},
+  			{name:'Paciente', id:3}
+  			//{name:'Invitado', id:4},
 		  ];
+  $scope.listado = {};
+  ServiceTraerEspecialidades.getespecialidades().then(function(respuesta){
+        console.log(respuesta);
+        $scope.especialidadSeleccionada = respuesta[0];
+        $scope.listado.listaEspecialidades = respuesta;
+      },function(error) {
+        console.log('unable to get the data', error);
+      });
+
 	$scope.volver = function(){
     $state.go('gestionDeUsuarios');
   };
+
 	$scope.perfilSeleccionado = 'Seleccione';
 	
 	$scope.uploader = new FileUploader({url: '../TPFinalServices/Datos/index.php/subirimagen'});
@@ -738,11 +771,14 @@ ServiceGrillaAdmin.getdoctores().then(function(respuesta){
 
   	$scope.uploader.onSuccessItem = function(item, response, status, headers) {
   	console.info(item,response,status,headers);
-    if($scope.perfilSeleccionado === 2 || $scope.perfilSeleccionado === 3){
+    if($scope.perfilSeleccionado === 'Doctor' || $scope.perfilSeleccionado === 'Paciente'){
       if($scope.domPaciente){
         $scope.persona.latitud = $scope.domPaciente.latitud;
         $scope.persona.longitud = $scope.domPaciente.longitud;
       }
+    }
+    if($scope.perfilAdministrador && $scope.perfilSeleccionado === 'Doctor'){
+      $scope.persona.especialidad = $scope.especialidadSeleccionada.cod_espec;
     }
     $http.post('../TPFinalServices/Datos/index.php/insertarusuario',{usuario:$scope.persona,perfil:$scope.perfilSeleccionado})
       	.then(function(respuesta) {       
@@ -935,10 +971,6 @@ ServiceGrillaAdmin.getdoctores().then(function(respuesta){
   };
 })
 
-.controller('templateModificarCtrl', function($scope, $http, $state,FileUploader,$stateParams,ServiceCargadorDeFotos,ServiceModificarAdministrador,ServiceModificarDoctor,ServiceModificarPaciente) {
-
-
-})
 
 .service('ServiceCargadorDeFotos', function($http, FileUploader){
 

@@ -150,10 +150,25 @@ class Doctor
 					
 	}
 
+	public static function TraerEspecialidad($id) {	
+
+		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
+		$consulta =$objetoAccesoDato->RetornarConsulta("
+			SELECT e.nombre_espec
+			FROM especialidades e, med_espec me
+			WHERE e.cod_espec = me.cod_espec
+			AND me.cod_med = :id");
+		$consulta->bindValue(':id',$id, PDO::PARAM_INT);
+		$consulta->execute();
+		$personaBuscada= $consulta->fetchObject('doctor');
+		return $personaBuscada;	
+					
+	}
+
 	public static function InsertarDoctorConDomicilio($persona)
 	{
 		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
-		$consulta =$objetoAccesoDato->RetornarConsulta("INSERT into doctores (nombre,mail,clave,foto,latitud,longitud)values(:nombre,:mail,:clave,:foto,:latitud,:longitud)");
+		$consulta = $objetoAccesoDato->RetornarConsulta("INSERT into doctores (nombre,mail,clave,foto,latitud,longitud)values(:nombre,:mail,:clave,:foto,:latitud,:longitud)");
 		//$consulta =$objetoAccesoDato->RetornarConsulta("CALL InsertarPersona (:nombre,:apellido,:dni,:foto)");
 		$consulta->bindValue(':nombre',$persona->nombre, PDO::PARAM_STR);
 		$consulta->bindValue(':mail', $persona->mail, PDO::PARAM_STR);
@@ -161,7 +176,14 @@ class Doctor
 		$consulta->bindValue(':foto', $persona->foto, PDO::PARAM_STR);
 		$consulta->bindValue(':latitud', $persona->latitud, PDO::PARAM_STR);
 		$consulta->bindValue(':longitud', $persona->longitud, PDO::PARAM_STR);
-		$consulta->execute();		
+		$consulta->execute();	
+		$idDoctor = $objetoAccesoDato->RetornarUltimoIdInsertado();
+
+		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
+		$consulta = $objetoAccesoDato->RetornarConsulta("INSERT into med_espec (cod_med, cod_espec) values(:idDoctor,:especialidad)");	
+		$consulta->bindValue(':especialidad',$persona->especialidad, PDO::PARAM_INT);
+		$consulta->bindValue(':idDoctor', $idDoctor, PDO::PARAM_INT);
+		$consulta->execute();	
 		return $objetoAccesoDato->RetornarUltimoIdInsertado();
 	
 				

@@ -13,7 +13,8 @@
 				<input type="date" min="2017-08-03" ng-min="2017-08-03" ng-model="fecha" required/></br>
 				<label>Hora (Entre 16 y 20 hs)</label></br>
 				<input type="number" min="16" max="20" ng-model="turno.hora"/></br>
-				<input type="submit" class="btn btn-success" ng-click="guardarTurno()"/>
+				<input type="input" style="margin-top:5px;" disabled ng-model="especialidad"><br>
+				<input type="submit" style="margin-top:5px;" class="btn btn-success" ng-click="guardarTurno()"/>
 			</form>
 		</div>
 

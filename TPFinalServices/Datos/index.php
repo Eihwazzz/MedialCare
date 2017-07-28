@@ -73,15 +73,22 @@ $app->post('/insertarusuario[/]', function($request, $response, $args) {
         echo $json;*/
 });
 $app->post('/GuardarTurno[/]', function($request, $response, $args) {
+    try{
     $body = $request->getBody();
     $input = json_decode($body); 
     
-    var_dump($input->turno);
+    //var_dump($input->turno);
     $ultimoId = Turno::GuardarTurno($input->turno);
-    var_dump($ultimoId);
+    //var_dump($ultimoId);
     $answer = array( 'answer' => 'Doctor Ingresado!' );
         $json = json_encode( $answer );
+        var_dump($json);
         return $json;
+    }catch(Exception $e){
+        echo $e;
+    }
+    
+        
 });
 $app->delete('/borrarusuario[/{iduser}]', function ($request, $response, $args) {
     //ARREGLAR EL METODO BORRARADMINISTRADOR ME PARECE QUE ES
@@ -204,9 +211,19 @@ $app->get('/getespecialidades[/]', function ($request, $response, $args) {
     //$response->write("Monstrar los CDS");
     //return $response;
 });
+$app->get('/getEspecialidad[/{id}]', function ($request, $response, $args) {
+    $listado = Doctor::TraerEspecialidad($args['id']);
+    return json_encode($listado);
+    //$response->write("Monstrar los CDS");
+    //return $response;
+});
 $app->get('/traerDomicilioDoctor[/{id}]', function ($request, $response, $args) {
     $domicilio = Doctor::TraerDomicilioDoctor($args['id']);
     return json_encode($domicilio);
+});
+$app->get('/traerTodosLosTurnos[/]', function ($request, $response, $args) {
+    $turnos = Turno::TraerTurnos();
+    return json_encode($turnos);
 });
 
 /**

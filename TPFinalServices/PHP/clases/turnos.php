@@ -62,15 +62,29 @@ class Turno
 		$arrTurnos= $consulta->fetchAll(PDO::FETCH_CLASS, "turno");	
 		return $arrTurnos;
 	}
+
+	public static function TraerTurnos()
+	{
+		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
+		$consulta =$objetoAccesoDato->RetornarConsulta("
+			SELECT t.fecha,  e.nombre_espec
+			FROM turnos t, med_espec me, especialidades e 
+			WHERE t.cod_doctor = me.cod_med
+			AND e.cod_espec = me.cod_espec");
+		$consulta->execute();
+		$arrTurnos= $consulta->fetchAll(PDO::FETCH_CLASS, "turno");	
+		return $arrTurnos;
+	}
 	
 	public static function GuardarTurno($turno){
 
 		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
-		$consulta =$objetoAccesoDato->RetornarConsulta("INSERT into turnos (cod_doctor,id_paciente,fecha,horario)values(:idDoctor,:idPaciente,:fecha,:hora)");
+		$consulta =$objetoAccesoDato->RetornarConsulta("INSERT into turnos (cod_doctor,id_paciente,fecha,horario,nombre_espec)values(:idDoctor,:idPaciente,:fecha,:hora,:nombreEspec)");
 		//$consulta =$objetoAccesoDato->RetornarConsulta("CALL InsertarPersona (:nombre,:apellido,:dni,:foto)");
 		$consulta->bindValue(':idDoctor',$turno->cod_doctor, PDO::PARAM_INT);
 		$consulta->bindValue(':idPaciente', $turno->id_paciente, PDO::PARAM_INT);
 		$consulta->bindValue(':fecha', $turno->fecha, PDO::PARAM_STR);
+		$consulta->bindValue(':nombreEspec', $turno->nombreEspec, PDO::PARAM_STR);
 		$consulta->bindValue(':hora', $turno->hora, PDO::PARAM_INT);
 		$consulta->execute();		
 		return $objetoAccesoDato->RetornarUltimoIdInsertado();

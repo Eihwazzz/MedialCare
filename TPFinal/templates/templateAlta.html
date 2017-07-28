@@ -34,13 +34,18 @@
 					<span id="lblClave" style="display:none;color:#FF0000;width:1%;float:right;font-size:80">*</span>
 				</div>
 			</div>
-			<div class="row">
+			<div class="row" style="margin-bottom:2px;">
 				<div class="col-xs-8 col-md-8 col-lg-8 col-xs-offset-2 col-md-offset-3 col-lg-offset-4">
 					<select ng-hide="mostrarSelect == false" ng-options="perf.name as perf.name for perf in perfiles" ng-model="perfilSeleccionado">
           			</select>
-          			<button ng-if="perfilSeleccionado == 'Paciente'" class="btn" ng-click="openMap()">Open Map</button>
+          			<button ng-if="perfilSeleccionado == 'Paciente' || perfilSeleccionado == 'Doctor'" class="btn" ng-click="openMap()">Open Map</button>
           		</div>
 			</div>	
+			<div class="row">
+				<div class="col-xs-8 col-md-8 col-lg-8 col-xs-offset-2 col-md-offset-3 col-lg-offset-4">
+					<select ng-if="perfilAdministrador && perfilSeleccionado == 'Doctor'" ng-model="especialidadSeleccionada" ng-options="esp.cod_espec as esp.nombre_espec for esp in listado.listaEspecialidades"></select>
+				</div>
+			</div>
 					<!--<img  ng-src="fotos/{{persona.foto}}" class="fotoform" id="foto"/>
 					<p style="  color: black;">*La foto se actualiza al guardar.</p>-->
 			<div class="row">

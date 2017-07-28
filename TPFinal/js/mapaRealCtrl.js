@@ -1,11 +1,12 @@
 var myApp = angular.module('MyFinalWeb');
 
-myApp.controller('mapaRealCtrl',function($scope,$http,$auth,$state, $timeout, $q, srvDoctores, $stateParams){
+myApp.controller('mapaRealCtrl',function($scope,$http,$auth,$state, $timeout, $q, srvDoctores, $stateParams,FileUploader){
 
 	if(!$auth.isAuthenticated()){
       $state.go('login');
     }
-
+    $scope.uploader = new FileUploader({url: '../TPFinalServices/Datos/index.php/subirimagen'});
+	$scope.uploader.queueLimit = 1;
 
     var pos = {};
     var map;

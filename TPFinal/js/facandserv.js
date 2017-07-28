@@ -140,7 +140,7 @@ app.service('ServiceTraerPacientePorId', function($http,$q){
 app.service('ServiceGuardarTurno', function($http,$q){
   var turno = function(unTurno){
    var defer3 = $q.defer();
-     $http.post('../TPFinalServices/Datos/index.php/guardarTurno',{turno:unTurno}).then(function(response){
+     $http.post('../TPFinalServices/Datos/index.php/GuardarTurno',{turno:unTurno}).then(function(response){
       defer3.resolve(response.data);
     },function(response) {
         defer3.reject(response);
@@ -161,9 +161,19 @@ app.service('ServiceTraerEspecialidades', function($http,$q){
     });
       return defer3.promise;
     };
+  var especialidad = function(id){
+   var defer4 = $q.defer();
+     $http.get('../TPFinalServices/Datos/index.php/getEspecialidad/'+id).then(function(response){
+      defer4.resolve(response.data);
+    },function(response) {
+        defer4.reject(response);
+    });
+      return defer4.promise;
+    };
   
     return{
-      getespecialidades: especialidades
+      getespecialidades: especialidades,
+      getEspecialidad: especialidad
     };
 });
 app.service('ServiceGrillaTurnos', function($http,$q){
@@ -180,6 +190,21 @@ app.service('ServiceGrillaTurnos', function($http,$q){
   
     return{
       getturnos: turnos
+    };
+});
+app.service('srvTurnos', function($http,$q){
+  var turnos = function(data){
+   var defer3 = $q.defer();
+     $http.get('../TPFinalServices/Datos/index.php/traerTodosLosTurnos').then(function(response){
+      defer3.resolve(response.data);
+    },function(response) {
+        defer3.reject(response);
+    });
+      return defer3.promise;
+    };
+  
+    return{
+      traerTurnos: turnos
     };
 });
 app.service('ServiceModificarPaciente', function($http,$q){
