@@ -229,7 +229,10 @@ $app->get('/traerTodosLosTurnos[/]', function ($request, $response, $args) {
     $turnos = Turno::TraerTurnos();
     return json_encode($turnos);
 });
-
+$app->get('/traerCantidadDoctoresPorEspecialidad[/]', function ($request, $response, $args) {
+    $listado = Doctor::TraerCantidadDoctoresPorEspecialidad();
+    return json_encode($listado);
+});
 /**
  * Step 4: Run the Slim application
  *

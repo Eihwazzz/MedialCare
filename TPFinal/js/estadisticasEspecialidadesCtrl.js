@@ -1,11 +1,19 @@
-app.controller('estadisticasEspecialidadesCtrl',function($scope,$http,$auth,$state){
+app.controller('estadisticasEspecialidadesCtrl',function($scope,$http,$auth,$state,srvGraficos){
     
     if(!$auth.isAuthenticated()){
       $state.go('login');
     }
 
+    $scope.cantidadDoctoresPorEspecialidad = [];
 
-      Highcharts.chart('containerEsdisticasCirculo', {
+    srvGraficos.getCantidadDoctoresPorEspecialidad()
+    .then(function(respuesta){
+        console.log(respuesta);
+        for(var i=0;i<respuesta.length;++i){
+            $scope.cantidadDoctoresPorEspecialidad.push({name:respuesta[i].nombre_espec,y:respuesta[i].cantidad});
+        }
+
+        Highcharts.chart('containerEsdisticasCirculo', {
         chart: {
             plotBackgroundColor: null,
             plotBorderWidth: null,
@@ -13,7 +21,7 @@ app.controller('estadisticasEspecialidadesCtrl',function($scope,$http,$auth,$sta
             type: 'pie'
         },
         title: {
-            text: 'Browser market shares January, 2015 to May, 2015'
+            text: 'Cantidad de Doctores por Especialidad'
         },
         tooltip: {
             pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
@@ -32,9 +40,10 @@ app.controller('estadisticasEspecialidadesCtrl',function($scope,$http,$auth,$sta
             }
         },
         series: [{
-            name: 'Brands',
+            name: 'Porcentaje',
             colorByPoint: true,
-            data: [{
+            data: $scope.cantidadDoctoresPorEspecialidad
+            /*[{
                 name: 'Microsoft Internet Explorer',
                 y: 56.33
             }, {
@@ -54,7 +63,9 @@ app.controller('estadisticasEspecialidadesCtrl',function($scope,$http,$auth,$sta
             }, {
                 name: 'Proprietary or Undetectable',
                 y: 0.2
-            }]
+            }]*/
         }]
       });
+    })
+
 });

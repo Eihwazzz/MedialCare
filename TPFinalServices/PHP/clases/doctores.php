@@ -82,6 +82,19 @@ class Doctor
 		$arrPersonas= $consulta->fetchAll(PDO::FETCH_CLASS, "persona");	
 		return $arrPersonas;
 	}
+
+	public static function TraerCantidadDoctoresPorEspecialidad()
+	{
+		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
+		$consulta =$objetoAccesoDato->RetornarConsulta("
+			select count(me.cod_med) as cantidad, e.nombre_espec
+			from med_espec me, especialidades e
+			where me.cod_espec = e.cod_espec
+			group by e.nombre_espec");
+		$consulta->execute();			
+		$listado= $consulta->fetchAll(PDO::FETCH_CLASS, "persona");	
+		return $listado;
+	}
 	
 	public static function BorrarPersona($idParametro)
 	{	
