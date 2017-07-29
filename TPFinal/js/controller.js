@@ -322,15 +322,24 @@ calculateAndDisplayRoute(
     {
       $state.go('login');
     }
-	
-    $scope.perfiles = [
-			{name:'Administrador', id:1},
-			{name:'Doctor', id:2},
-			{name:'Paciente', id:3}
-			//{name:'Invitado', id:4},
-		  ];
+
+  $scope.mostrarDatosRecupero = false;
+
+  $scope.perfiles = [
+    {name:'Administrador', id:1},
+    {name:'Doctor', id:2},
+    {name:'Paciente', id:3}
+    //{name:'Invitado', id:4},
+  ];
+
+  $scope.datosRecupero = {};
+  $scope.datosRecupero.perfilRecupero = $scope.perfiles[2];
+  $scope.envioMail = function(){
+    $scope.mostrarDatosRecupero = true;
+  }
+
 		  
-		  $scope.selectedUser = '';
+	$scope.selectedUser = '';
 
 
 	$scope.seleccion = true;

@@ -31,6 +31,24 @@
         <button class="btn btn-lg btn-primary btn-block" ng-click="logear()">Ingresar</button>
         
         <button class="btn btn-lg btn-primary btn-block" ng-click="limpiarPerfiles()">Limpiar Perfiles</button>
-        
+
+        <div><center><a ng-click="envioMail()" style="cursor:pointer;">Recuperar contrase&ntilde;a</a></center></div>
+
+      </form>
+
+      <form class="form-signin">
+        <div ng-if="mostrarDatosRecupero">
+          <center>
+            <label>Mail</label>
+            </br>
+            <input type="email" style="margin-bottom: 2px;" ng-model="datosRecupero.mailPassword" required>
+            </br>
+            <label>Seleccione su perfil</label>
+            </br>
+            <select style="margin-bottom: 2px;" ng-model="datosRecupero.perfilRecupero" ng-options="perfil as perfil.name for perfil in perfiles">
+            </select>
+            <button class="btn btn-small btn-primary btn-block">Recuperar</button>
+          </center>
+        </div>  
       </form>
 </div>

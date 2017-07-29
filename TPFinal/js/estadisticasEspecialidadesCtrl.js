@@ -6,6 +6,10 @@ app.controller('estadisticasEspecialidadesCtrl',function($scope,$http,$auth,$sta
 
     $scope.cantidadDoctoresPorEspecialidad = [];
 
+    $scope.volver = function(){
+        $state.go('menuAdmin');
+    }
+
     srvGraficos.getCantidadDoctoresPorEspecialidad()
     .then(function(respuesta){
         console.log(respuesta);

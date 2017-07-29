@@ -233,6 +233,10 @@ $app->get('/traerCantidadDoctoresPorEspecialidad[/]', function ($request, $respo
     $listado = Doctor::TraerCantidadDoctoresPorEspecialidad();
     return json_encode($listado);
 });
+$app->post('/recuperarPassword[/]', function ($request, $response, $args) {
+    $listado = Doctor::TraerCantidadDoctoresPorEspecialidad();
+    return json_encode($listado);
+});
 /**
  * Step 4: Run the Slim application
  *
