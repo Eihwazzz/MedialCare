@@ -76,6 +76,25 @@ class Turno
 		return $arrTurnos;
 	}
 	
+	public static function TraerTurnosPorEspecialidad()
+	{
+		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
+		$consulta =$objetoAccesoDato->RetornarConsulta("
+			SELECT 
+				MONTH(t.fecha) AS MES, 
+			    COUNT(t.nombre_espec) AS CANT_ESPEC, 
+			    t.nombre_espec
+			FROM 
+				turnos t
+			GROUP BY
+				t.nombre_espec, MES
+			ORDER BY
+				MES");
+		$consulta->execute();
+		$arrTurnos= $consulta->fetchAll(PDO::FETCH_CLASS, "turno");	
+		return $arrTurnos;
+	}
+
 	public static function GuardarTurno($turno){
 
 		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 

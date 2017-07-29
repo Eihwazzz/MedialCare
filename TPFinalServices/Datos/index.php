@@ -187,6 +187,10 @@ $app->get('/getturnos[/{id}/{perfil}]', function ($request, $response, $args) {
     return json_encode($listado);
     //return json_encode($input);
 });
+$app->get('/getTurnosPorEspecialidad[/]', function ($request, $response, $args) {
+    $listado = Turno::TraerTurnosPorEspecialidad();
+    return json_encode($listado);
+});
 $app->get('/traerTurnosPorIdDoctor[/{id}]', function ($request, $response, $args) {
     $turnos = Doctor::TraerTurnosDisponibles($args['id']);
     return json_encode($turnos);
