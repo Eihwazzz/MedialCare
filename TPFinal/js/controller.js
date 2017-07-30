@@ -317,13 +317,14 @@ calculateAndDisplayRoute(
     return local.toJSON().slice(0, 10);
 }
 })
-.controller('loginCtrl', function($scope, $http, $auth, $state, srvRecuperacion) {
+.controller('loginCtrl', function($scope, $http, $auth, $state, srvRecuperacion,srvVerificarCodigoDoctor) {
 	if(!$auth.isAuthenticated())
     {
       $state.go('login');
     }
 
   $scope.mostrarDatosRecupero = false;
+  $scope.mostrarInputDoctor = false;
 
   $scope.perfiles = [
     {name:'Administrador', id:1},
@@ -334,6 +335,11 @@ calculateAndDisplayRoute(
 
   $scope.datosRecupero = {};
   $scope.datosRecupero.perfilRecupero = $scope.perfiles[2];
+
+  $scope.registroDoctor = function(){
+    $scope.mostrarInputDoctor = true;
+  }
+
   $scope.recuperarPassword = function(){
     $scope.mostrarDatosRecupero = true;
   }
@@ -344,6 +350,17 @@ calculateAndDisplayRoute(
     })
   }
 
+  $scope.registrarDoctor = function(codigo){
+    srvVerificarCodigoDoctor.verificarCodigo(codigo)
+    .then(function(respuesta){
+      if(respuesta && respuesta.data){
+        $scope.errorCodigoDoctor = null;
+        $state.go('registroDoctor');
+      }else{
+        $scope.errorCodigoDoctor = 'El codigo es invalido';
+      }
+    })
+  }
 		  
 	$scope.selectedUser = '';
 
@@ -556,8 +573,7 @@ ServiceGrillaAdmin.getdoctores().then(function(respuesta){
     }
 
     $scope.gridOptions = {};
-    $scope.gridOptions.paginationPageSizes = [25, 50, 75];
-    $scope.gridOptions.paginationPageSize = 25;
+    //$scope.gridOptions.enablePaginationControls: true,
     $scope.gridOptions = {
       rowHeight:50,
       enableFiltering: true,
@@ -607,6 +623,8 @@ ServiceGrillaAdmin.getdoctores().then(function(respuesta){
       $scope.gridApi = gridApi;
     }
   };
+  $scope.gridOptions.paginationPageSizes = [25, 50, 75];
+  $scope.gridOptions.paginationPageSize = 25;
   $scope.gridOptions.exporterCsvColumnSeparator = ';';
     $scope.mostrarTurnos = function(){
       

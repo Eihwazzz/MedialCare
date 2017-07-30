@@ -271,3 +271,19 @@ app.service('srvDoctores', function($http,$q){
     traerDomicilioDoctor: traerDomDoctor
   };
 });
+app.service('srvVerificarCodigoDoctor', function($http,$q){
+  var verificaCodigo = function(codigo){
+  var defer = $q.defer();
+    $http.get('../TPFinalServices/Datos/index.php/chequearCodigo/'+codigo)
+      .then(function(response){
+        console.log(response);
+          defer.resolve(response);
+      },function(response) {
+            defer.reject(response);
+      });
+          return defer.promise;
+    };
+  return{
+    verificarCodigo: verificaCodigo
+  };
+});

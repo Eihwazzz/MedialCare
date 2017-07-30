@@ -253,6 +253,14 @@ $app->post('/recuperarPassword[/]', function ($request, $response, $args) {
     }
     return false;
 });
+$app->get('/chequearCodigo[/{codigo}]', function ($request, $response, $args) {
+    $listado = Doctor::ChequearCodigoDoctor($args['codigo']);
+    //var_dump(json_decode(json_encode($listado))[0]->codigo);
+    if($listado){
+        var_dump($listado[0]->codigo);
+    }
+    return $listado;
+});
 /**
  * Step 4: Run the Slim application
  *

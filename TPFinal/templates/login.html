@@ -1,4 +1,17 @@
 <div class="container">
+  <div style="float:right;margin-top: 20px;">
+    <a style="cursor:pointer;" ng-click="registroDoctor()">Registrar Doctor</a>
+    </br>
+    <div ng-show="mostrarInputDoctor">
+      <label>Ingrese el c&oacute;digo</label>
+      </br>
+      <input type="text" style="margin-bottom: 2px;" ng-model="codigoNuevoDoctor"/>
+      </br>
+      <button class="btn btn-info" ng-click="registrarDoctor(codigoNuevoDoctor)">Registrar</button>
+      </br>
+      <span>{{errorCodigoDoctor}}</span>
+    </div>
+  </div>
 	<form class="form-signin">
         <h2 class="">Iniciar Sesi&oacute;n</h2>
         <label for="inputEmail" class="sr-only">Email</label>
