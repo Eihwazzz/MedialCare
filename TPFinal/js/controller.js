@@ -317,7 +317,7 @@ calculateAndDisplayRoute(
     return local.toJSON().slice(0, 10);
 }
 })
-.controller('loginCtrl', function($scope, $http, $auth, $state) {
+.controller('loginCtrl', function($scope, $http, $auth, $state, srvRecuperacion) {
 	if(!$auth.isAuthenticated())
     {
       $state.go('login');
@@ -334,8 +334,14 @@ calculateAndDisplayRoute(
 
   $scope.datosRecupero = {};
   $scope.datosRecupero.perfilRecupero = $scope.perfiles[2];
-  $scope.envioMail = function(){
+  $scope.recuperarPassword = function(){
     $scope.mostrarDatosRecupero = true;
+  }
+  $scope.envioMail = function(){
+    srvRecuperacion.recuperarPassword($scope.datosRecupero.mailPassword, $scope.datosRecupero.perfilRecupero.name)
+    .then(function(respuesta){
+      console.log(respuesta);
+    })
   }
 
 		  

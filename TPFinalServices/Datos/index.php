@@ -234,8 +234,24 @@ $app->get('/traerCantidadDoctoresPorEspecialidad[/]', function ($request, $respo
     return json_encode($listado);
 });
 $app->post('/recuperarPassword[/]', function ($request, $response, $args) {
-    $listado = Doctor::TraerCantidadDoctoresPorEspecialidad();
-    return json_encode($listado);
+    $body = $request->getBody();
+    //$body = json_decode(file_get_contents("php://input"));
+    //Cualquiera de los 2 sirve :)
+    $input = json_decode($body);
+    //var_dump($input->perfil);
+    if($input->perfil == 'Doctor'){
+        /*$verifica = json_encode(Doctor::VerificarMailDoctor($input));
+        var_dump(json_decode($verifica,true));*/
+        $verifica = json_decode(json_encode(Doctor::VerificarMailDoctor($input)),true);
+    }else if($input->perfil == 'Paciente'){
+        $verifica = json_decode(json_encode(Paciente::VerificarMailPaciente($input)),true);
+    }else if($input->perfil == 'Administrador'){
+        $verifica = json_decode(json_encode(Administrador::VerificarMailAdministrador($input)),true);
+    }
+    if($verifica){
+        enviar_mail($input->mail, $verifica[0]["clave"]);
+    }
+    return false;
 });
 /**
  * Step 4: Run the Slim application
@@ -244,8 +260,35 @@ $app->post('/recuperarPassword[/]', function ($request, $response, $args) {
  * and returns the HTTP response to the HTTP client.
  */
 $app->run();
-function console_log( $data ){
-  echo '<script>';
-  echo 'console.log('. json_encode( $data ) .')';
-  echo '</script>';
+function enviar_mail( $mail, $clave ){
+    $to=$mail;
+    $message = "
+        <html>
+        <head>
+        <title>Recuerpo de contrase&ntilde;a</title>
+        </head>
+        <body>
+        <table>
+        <tr>
+        <th>Mail</th>
+        <th>Contrase&ntilde;a</th>
+        </tr>
+        <tr>
+        <td>$mail</td>
+        <td>$clave</td>
+        </tr>
+        </table>
+        </body>
+        </html>";
+    $subject="Recupero de contraseña";
+    $headers  = "MIME-Version: 1.0" . PHP_EOL;
+    $headers .= "Content-Type: text/html; charset=ISO-8859-1" . PHP_EOL;
+    $headers .= "From: Mikehunter" . PHP_EOL;
+    //$header="From: mike4hunter.mb@gmail.com";
+    $resultado = mail($to,$subject,$message,$headers);
+    if($resultado == true){
+        echo "Mail enviado";
+    }else{
+        echo "No se pudo enviar el mail";
+    }
 };

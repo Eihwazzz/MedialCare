@@ -52,6 +52,22 @@ class Administrador
 		return $idBuscada;	
 	}
 
+	public static function VerificarMailAdministrador($mailYPerfil){
+		
+		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
+		$consulta =$objetoAccesoDato->RetornarConsulta("
+			SELECT clave from administradores where mail = :mail");
+		$consulta->bindValue(':mail',$mailYPerfil->mail, PDO::PARAM_STR);
+		$consulta->execute();
+		$result= $consulta->fetchColumn();
+		if($result == 0){
+			$resultado = 0;
+		}else{
+			$resultado = $result;
+		}
+		return $resultado;
+	}
+
 	public static function TraerTodosLosUsuarios()
 	{
 		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 

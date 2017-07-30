@@ -65,6 +65,23 @@ class Doctor
 		$idBuscada= $consulta->fetchColumn();
 		return $idBuscada;	
 	}
+
+	public static function VerificarMailDoctor($mailYPerfil){
+		
+		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
+		$consulta =$objetoAccesoDato->RetornarConsulta("
+			SELECT clave from doctores where mail = :mail");
+		$consulta->bindValue(':mail',$mailYPerfil->mail, PDO::PARAM_STR);
+		$consulta->execute();
+		$result= $consulta->fetchAll(PDO::FETCH_CLASS, "doctor");
+		if($result == 0){
+			$resultado = 0;
+		}else{
+			$resultado = $result;
+		}
+		return $resultado;
+	}
+
 	public static function TraerTodasLasEspecialidades()
 	{
 		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 

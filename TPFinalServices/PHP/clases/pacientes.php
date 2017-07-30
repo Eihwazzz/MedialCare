@@ -70,6 +70,22 @@ class Paciente
 		return $idBuscada;	
 	}
 
+	public static function VerificarMailPaciente($mailYPerfil){
+		
+		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
+		$consulta =$objetoAccesoDato->RetornarConsulta("
+			SELECT clave from pacientes where mail = :mail");
+		$consulta->bindValue(':mail',$mailYPerfil->mail, PDO::PARAM_STR);
+		$consulta->execute();
+		$numRows= $consulta->fetchColumn();
+		if($numRows == 0){
+			$resultado = 0;
+		}else{
+			$resultado = 1;
+		}
+		return $resultado;	
+	}
+
 	public static function TraerTodosLosUsuarios()
 	{
 		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
