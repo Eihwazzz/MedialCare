@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 30-07-2017 a las 16:40:07
+-- Tiempo de generación: 30-07-2017 a las 22:30:58
 -- Versión del servidor: 10.1.24-MariaDB
 -- Versión de PHP: 7.1.6
 
@@ -45,6 +45,23 @@ INSERT INTO `administradores` (`id_administrador`, `nombre`, `mail`, `clave`, `f
 (6, 'Carlos Matias', 'mimail2@hotmail.com', '1234', 'Jellyfish.jpg'),
 (7, 'Mariano', 'example@hotmail.com', '1234', 'Koala.jpg'),
 (8, 'Carlos', 'example@hotmail.com', '1234', 'pordefecto.png');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `codigo_registros`
+--
+
+CREATE TABLE `codigo_registros` (
+  `codigo` int(8) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `codigo_registros`
+--
+
+INSERT INTO `codigo_registros` (`codigo`) VALUES
+(12345);
 
 -- --------------------------------------------------------
 
@@ -96,7 +113,8 @@ INSERT INTO `doctores` (`cod_doctor`, `nombre`, `apellido`, `mail`, `dni`, `clav
 (12, 'Martin Marcos', '', 'marmarcos@hotmail.com', '', '1234', '0000-00-00', 'doctor.png', 42504000, '-34.6564338', '-58.3530948'),
 (13, 'Mario Jose', '', 'jomase@hotmail.com', '', '1234', '0000-00-00', 'doctor.png', 42504000, '-34.6584015', '-58.3570815'),
 (14, 'Roberto Alberto', '', 'distretodos@hotmail.com', '', '1234', '0000-00-00', 'doctor.png', 42504000, '-34.6678738', '-58.3530025'),
-(15, 'Alberto', '', 'mike4hunter@hotmail.com', '', '1234', '0000-00-00', 'doctor.png', 42504000, '-34.6980712', '-58.3722131');
+(15, 'Alberto', '', 'mike4hunter@hotmail.com', '', '1234', '0000-00-00', 'doctor.png', 42504000, '-34.6980712', '-58.3722131'),
+(17, 'Martin Test', '', 'MartinTestDoctor@hotmail.com', '', '1234', '0000-00-00', 'doctor.png', 42504000, '-34.6551879', '-58.3533832');
 
 -- --------------------------------------------------------
 
@@ -198,7 +216,8 @@ INSERT INTO `med_espec` (`cod_med`, `cod_espec`) VALUES
 (12, 8),
 (13, 2),
 (14, 6),
-(15, 1);
+(15, 1),
+(17, 1);
 
 -- --------------------------------------------------------
 
@@ -389,7 +408,7 @@ ALTER TABLE `administradores`
 -- AUTO_INCREMENT de la tabla `doctores`
 --
 ALTER TABLE `doctores`
-  MODIFY `cod_doctor` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `cod_doctor` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 --
 -- AUTO_INCREMENT de la tabla `entidad`
 --
