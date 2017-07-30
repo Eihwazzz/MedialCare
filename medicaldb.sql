@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 25-07-2017 a las 02:53:15
+-- Tiempo de generación: 30-07-2017 a las 16:40:07
 -- Versión del servidor: 10.1.24-MariaDB
 -- Versión de PHP: 7.1.6
 
@@ -42,8 +42,9 @@ CREATE TABLE `administradores` (
 
 INSERT INTO `administradores` (`id_administrador`, `nombre`, `mail`, `clave`, `foto`) VALUES
 (1, 'Martin', 'mike@hotmail.com', '1234', 'administrador.png'),
-(6, 'Carlos Pedro', 'mimail2@hotmail.com', '1234', 'Lighthouse.jpg'),
-(7, 'Mariano', 'example@hotmail.com', '1234', 'Koala.jpg');
+(6, 'Carlos Matias', 'mimail2@hotmail.com', '1234', 'Jellyfish.jpg'),
+(7, 'Mariano', 'example@hotmail.com', '1234', 'Koala.jpg'),
+(8, 'Carlos', 'example@hotmail.com', '1234', 'pordefecto.png');
 
 -- --------------------------------------------------------
 
@@ -82,7 +83,20 @@ CREATE TABLE `doctores` (
 --
 
 INSERT INTO `doctores` (`cod_doctor`, `nombre`, `apellido`, `mail`, `dni`, `clave`, `fechaNac`, `foto`, `telefono`, `latitud`, `longitud`) VALUES
-(1, 'Roberto', 'Gladores', 'roberto@hotmail.com', '24435654', '1234', '1973-07-20', 'doctor.png', 42504000, '-34.6750806', '-58.3515754');
+(1, 'Roberto', 'Gladores', 'roberto@hotmail.com', '24435654', '1234', '1973-07-20', 'doctor.png', 42504000, '-34.6750806', '-58.3515754'),
+(3, 'Marcos Matias', '', 'MarcosLepastra@hotmail.com', '', '1234', '0000-00-00', 'doctor.png', 42504000, '-34.7004625', '-58.4014481'),
+(4, 'Mariana', '', 'example@hotmail.com', '', '1234', '0000-00-00', 'pordefecto.png', 42504000, '-34.6730416', '-58.3837242'),
+(5, 'Mariana', '', 'MarianaMedina@hotmail.com', '', '1234', '0000-00-00', 'pordefecto.png', 42504000, '-34.6829715', '-58.3554494'),
+(6, 'Mariano', '', 'example@hotmail.com', '', '1234', '0000-00-00', 'pordefecto.png', 42504000, '-34.7005797', '-58.380242'),
+(7, 'Mariano', '', 'example@hotmail.com', '', '1234', '0000-00-00', 'pordefecto.png', 42504000, '-34.700519', '-58.3751986'),
+(8, 'Mariano', '', 'example@hotmail.com', '', '1234', '0000-00-00', 'pordefecto.png', 42504000, '-34.6577468', '-58.3572842'),
+(9, 'Marcos', 'Peralta', 'marcospe@gmail.com', '32.256.356', '1234', '0000-00-00', 'pordefecto.png', 42504000, '-34.6789788', '-58.4041956'),
+(10, 'Pedro Morales', '', 'PedroMora@hotmail.com', '', '1234', '0000-00-00', 'doctor.png', 42504000, '-34.6977415', '-58.3729229'),
+(11, 'Pedro Matias', '', 'mariandoce@hotmail.com', '', '1234', '0000-00-00', 'doctor.png', 42504000, '-34.6727216', '-58.3631692'),
+(12, 'Martin Marcos', '', 'marmarcos@hotmail.com', '', '1234', '0000-00-00', 'doctor.png', 42504000, '-34.6564338', '-58.3530948'),
+(13, 'Mario Jose', '', 'jomase@hotmail.com', '', '1234', '0000-00-00', 'doctor.png', 42504000, '-34.6584015', '-58.3570815'),
+(14, 'Roberto Alberto', '', 'distretodos@hotmail.com', '', '1234', '0000-00-00', 'doctor.png', 42504000, '-34.6678738', '-58.3530025'),
+(15, 'Alberto', '', 'mike4hunter@hotmail.com', '', '1234', '0000-00-00', 'doctor.png', 42504000, '-34.6980712', '-58.3722131');
 
 -- --------------------------------------------------------
 
@@ -171,7 +185,20 @@ CREATE TABLE `med_espec` (
 --
 
 INSERT INTO `med_espec` (`cod_med`, `cod_espec`) VALUES
-(1, 3);
+(1, 3),
+(3, 2),
+(4, 4),
+(5, 5),
+(6, 6),
+(7, 5),
+(8, 1),
+(9, 8),
+(10, 1),
+(11, 4),
+(12, 8),
+(13, 2),
+(14, 6),
+(15, 1);
 
 -- --------------------------------------------------------
 
@@ -199,7 +226,7 @@ CREATE TABLE `pacientes` (
 
 INSERT INTO `pacientes` (`id_paciente`, `nombre`, `apellido`, `fechaNac`, `mail`, `clave`, `dni`, `domicilio`, `foto`, `latitud`, `longitud`) VALUES
 (1, 'Marcos', 'Perlin', '1976-06-09', 'marcos@gmail.com.ar', '1234', '28325652', 'Peralta 243', 'pordefecto.png', '-34.7019099', '-58.3791374'),
-(2, 'Pedro1', '', '0000-00-00', 'Pedro4532423425@hotmail.com', '1234', '', '', 'pordefecto.png', '-34.6583448', '-58.373093'),
+(2, 'Manuel', '', '0000-00-00', 'Pedro4532423425@hotmail.com', '1234', '', '', 'pordefecto.png', '-34.6583448', '-58.373093'),
 (3, 'MarianoLean', '', '0000-00-00', 'leanM@hotmail.com', '1234', '', '', 'pordefecto.png', '-34.6044134', '-58.3753192'),
 (4, 'Eliana', '', '0000-00-00', 'ElianaDorpe@hotmail.com', '1234', '', '', 'Penguins.jpg', '-34.6153584', '-58.3834173'),
 (5, 'Mariano', '', '0000-00-00', 'example@hotmail.com', '1234', '', '', 'pordefecto.png', '-34.7364053', '-58.2965294'),
@@ -216,16 +243,45 @@ CREATE TABLE `turnos` (
   `cod_doctor` int(8) NOT NULL,
   `id_paciente` int(8) NOT NULL,
   `fecha` date NOT NULL,
-  `horario` time NOT NULL
+  `horario` time NOT NULL,
+  `asistido` int(1) DEFAULT NULL,
+  `nombre_espec` varchar(50) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Volcado de datos para la tabla `turnos`
 --
 
-INSERT INTO `turnos` (`id_turno`, `cod_doctor`, `id_paciente`, `fecha`, `horario`) VALUES
-(13, 1, 1, '2017-08-10', '17:00:00'),
-(14, 1, 1, '2017-08-18', '17:00:00');
+INSERT INTO `turnos` (`id_turno`, `cod_doctor`, `id_paciente`, `fecha`, `horario`, `asistido`, `nombre_espec`) VALUES
+(13, 1, 1, '2017-08-10', '17:00:00', 1, 'Medico Clinico'),
+(14, 1, 1, '2017-08-18', '17:00:00', 0, 'Medico Clinico'),
+(15, 1, 2, '2017-01-23', '06:00:00', 1, 'Medico Clinico'),
+(16, 1, 3, '2017-03-24', '06:00:00', 1, 'Medico Clinico'),
+(17, 1, 4, '2017-04-12', '07:00:00', 1, 'Medico Clinico'),
+(18, 1, 5, '2017-03-16', '07:00:00', 1, 'Medico Clinico'),
+(19, 1, 5, '2017-05-23', '07:00:00', 1, 'Medico Clinico'),
+(20, 1, 6, '2017-05-29', '07:00:00', 1, 'Medico Clinico'),
+(21, 1, 2, '2017-05-03', '07:00:00', 1, 'Medico Clinico'),
+(22, 1, 1, '2017-05-12', '07:00:00', 1, 'Medico Clinico'),
+(23, 1, 2, '2017-06-11', '06:00:00', 1, 'Medico Clinico'),
+(24, 1, 3, '2017-06-09', '06:00:00', 1, 'Medico Clinico'),
+(25, 1, 4, '2017-05-30', '08:00:00', 1, 'Medico Clinico'),
+(26, 1, 6, '2017-06-12', '07:00:00', 1, 'Medico Clinico'),
+(27, 1, 2, '2017-07-11', '07:00:00', 1, 'Medico Clinico'),
+(28, 1, 3, '2017-07-09', '07:00:00', 1, 'Medico Clinico'),
+(29, 1, 4, '2017-07-12', '08:00:00', 1, 'Medico Clinico'),
+(30, 1, 6, '2017-06-26', '06:00:00', 1, 'Medico Clinico'),
+(31, 1, 1, '2017-05-22', '07:00:00', 1, 'Medico Clinico'),
+(32, 1, 1, '2017-06-03', '07:00:00', 1, 'Medico Clinico'),
+(33, 1, 1, '2017-04-15', '08:00:00', 1, 'Medico Clinico'),
+(34, 1, 1, '2017-03-26', '06:00:00', 1, 'Medico Clinico'),
+(35, 1, 1, '2017-06-22', '07:00:00', 0, 'Medico Clinico'),
+(36, 1, 1, '2017-07-03', '07:00:00', 0, 'Medico Clinico'),
+(37, 1, 1, '2017-08-15', '08:00:00', 1, 'Medico Clinico'),
+(38, 1, 1, '2017-09-26', '06:00:00', 0, 'Medico Clinico'),
+(41, 1, 1, '2017-08-28', '17:00:00', NULL, 'Medico Clinico'),
+(42, 8, 1, '2017-08-22', '17:00:00', NULL, 'Traumatologia'),
+(43, 8, 1, '2017-09-21', '18:00:00', NULL, 'Traumatologia');
 
 -- --------------------------------------------------------
 
@@ -328,12 +384,12 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de la tabla `administradores`
 --
 ALTER TABLE `administradores`
-  MODIFY `id_administrador` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id_administrador` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT de la tabla `doctores`
 --
 ALTER TABLE `doctores`
-  MODIFY `cod_doctor` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `cod_doctor` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 --
 -- AUTO_INCREMENT de la tabla `entidad`
 --
@@ -358,7 +414,7 @@ ALTER TABLE `pacientes`
 -- AUTO_INCREMENT de la tabla `turnos`
 --
 ALTER TABLE `turnos`
-  MODIFY `id_turno` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id_turno` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 --
 -- AUTO_INCREMENT de la tabla `usuario`
 --
