@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 30-07-2017 a las 22:30:58
+-- Tiempo de generación: 31-07-2017 a las 04:34:46
 -- Versión del servidor: 10.1.24-MariaDB
 -- Versión de PHP: 7.1.6
 
@@ -272,8 +272,8 @@ CREATE TABLE `turnos` (
 --
 
 INSERT INTO `turnos` (`id_turno`, `cod_doctor`, `id_paciente`, `fecha`, `horario`, `asistido`, `nombre_espec`) VALUES
-(13, 1, 1, '2017-08-10', '17:00:00', 1, 'Medico Clinico'),
-(14, 1, 1, '2017-08-18', '17:00:00', 0, 'Medico Clinico'),
+(13, 1, 1, '2017-08-10', '17:00:00', NULL, 'Medico Clinico'),
+(14, 1, 1, '2017-08-18', '17:00:00', NULL, 'Medico Clinico'),
 (15, 1, 2, '2017-01-23', '06:00:00', 1, 'Medico Clinico'),
 (16, 1, 3, '2017-03-24', '06:00:00', 1, 'Medico Clinico'),
 (17, 1, 4, '2017-04-12', '07:00:00', 1, 'Medico Clinico'),
@@ -296,11 +296,18 @@ INSERT INTO `turnos` (`id_turno`, `cod_doctor`, `id_paciente`, `fecha`, `horario
 (34, 1, 1, '2017-03-26', '06:00:00', 1, 'Medico Clinico'),
 (35, 1, 1, '2017-06-22', '07:00:00', 0, 'Medico Clinico'),
 (36, 1, 1, '2017-07-03', '07:00:00', 0, 'Medico Clinico'),
-(37, 1, 1, '2017-08-15', '08:00:00', 1, 'Medico Clinico'),
-(38, 1, 1, '2017-09-26', '06:00:00', 0, 'Medico Clinico'),
+(37, 1, 1, '2017-08-15', '08:00:00', NULL, 'Medico Clinico'),
+(38, 1, 1, '2017-09-26', '06:00:00', NULL, 'Medico Clinico'),
 (41, 1, 1, '2017-08-28', '17:00:00', NULL, 'Medico Clinico'),
 (42, 8, 1, '2017-08-22', '17:00:00', NULL, 'Traumatologia'),
-(43, 8, 1, '2017-09-21', '18:00:00', NULL, 'Traumatologia');
+(43, 8, 1, '2017-09-21', '18:00:00', NULL, 'Traumatologia'),
+(44, 1, 1, '2017-08-29', '18:00:00', NULL, 'Medico Clinico'),
+(45, 14, 1, '2017-08-02', '18:00:00', NULL, 'Otorrinolaringologia'),
+(46, 1, 1, '2017-08-02', '17:00:00', 1, 'Medico Clinico'),
+(47, 1, 1, '2017-08-02', '17:00:00', 1, 'Medico Clinico'),
+(48, 1, 1, '2017-08-02', '16:00:00', 1, 'Medico Clinico'),
+(49, 1, 1, '2017-08-02', '17:00:00', 1, 'Medico Clinico'),
+(50, 1, 1, '2017-08-02', '18:00:00', 1, 'Medico Clinico');
 
 -- --------------------------------------------------------
 
@@ -433,7 +440,7 @@ ALTER TABLE `pacientes`
 -- AUTO_INCREMENT de la tabla `turnos`
 --
 ALTER TABLE `turnos`
-  MODIFY `id_turno` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+  MODIFY `id_turno` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
 --
 -- AUTO_INCREMENT de la tabla `usuario`
 --
