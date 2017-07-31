@@ -535,7 +535,7 @@ ServiceGrillaAdmin.getdoctores().then(function(respuesta){
     console.log('unable to get the data', error);
   });
 })
-.controller('templateGrillaTurnosCtrl', function($scope,$http,$auth,$state,ServiceGrillaTurnos,uiGridConstants){
+.controller('templateGrillaTurnosCtrl', function($scope,$http,$auth,$state,ServiceGrillaTurnos,uiGridConstants,srvDoctores){
 	if(!$auth.isAuthenticated())
     {
       $state.go('login');
@@ -574,6 +574,30 @@ ServiceGrillaAdmin.getdoctores().then(function(respuesta){
       $state.go('verMapa',{idDoctor:idDoctor});
     }
 
+    $scope.turnoNoAsistido = function(idTurno){
+      srvDoctores.marcarTurno(idTurno,0)
+      .then(function(respuesta){
+        if(respuesta && respuesta.data){
+          console.log('Turno cambiado');
+        }else{
+          console.log('No se pudo cambiar el turno');
+        }
+        $state.reload();
+      })
+    }
+
+    $scope.turnoAsistido = function(idTurno){
+      srvDoctores.marcarTurno(idTurno,1)
+      .then(function(respuesta){
+        if(respuesta && respuesta.data){
+          console.log('Turno cambiado');
+        }else{
+          console.log('No se pudo cambiar el turno');
+        }
+        $state.reload();
+      })
+    }
+
     $scope.gridOptions = {};
     //$scope.gridOptions.enablePaginationControls: true,
     $scope.gridOptions = {
@@ -593,7 +617,7 @@ ServiceGrillaAdmin.getdoctores().then(function(respuesta){
       {name:'asistido',fieldName:'Asistido',displayName:'Asistido', width:"120",
           cellTemplate:function(dsasda){
             if(payload.perfil === 'Doctor'){
-              return "<center><div>{{row.entity.asistido != null && row.entity.asistido != undefined ? (row.entity.asistido ? 'Asistido' : 'No Asistido') : ''}}<button style='width:66.58px;font-size:x-small;' ng-if='row.entity.asistido == null || row.entity.asistido == undefined' ng-click='grid.appScope.turnoAsistido()'>Asistido</button><button style='font-size:x-small;' ng-if='row.entity.asistido == null || row.entity.asistido == undefined' ng-click='grid.appScope.turnoNoAsistido()'>No Asistido</button></div></center>";
+              return "<center><div>{{row.entity.asistido != null && row.entity.asistido != undefined ? (row.entity.asistido ? 'Asistido' : 'No Asistido') : ''}}<button style='width:66.58px;font-size:x-small;' ng-if='row.entity.asistido == null || row.entity.asistido == undefined' ng-click='grid.appScope.turnoAsistido(row.entity.id_turno)'>Asistido</button><button style='font-size:x-small;' ng-if='row.entity.asistido == null || row.entity.asistido == undefined' ng-click='grid.appScope.turnoNoAsistido(row.entity.id_turno)'>No Asistido</button></div></center>";
             }else{
               return "<center><div>{{row.entity.asistido != null && row.entity.asistido != undefined ? (row.entity.asistido ? 'Asistido' : 'No Asistido') : 'Pendiente'}}</div></center>";
             }

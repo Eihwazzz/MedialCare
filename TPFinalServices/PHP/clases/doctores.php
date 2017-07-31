@@ -83,6 +83,19 @@ class Doctor
 		return $resultado;	
 	}
 
+	public static function marcarAsistencia($datos){
+		
+		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso();
+		$consulta =$objetoAccesoDato->RetornarConsulta("
+			update turnos 
+			set asistido = :asistencia
+			where id_turno=:idTurno");
+		$consulta->bindValue(':asistencia',$datos->asistencia, PDO::PARAM_INT);
+		$consulta->bindValue(':idTurno',$datos->turno, PDO::PARAM_INT);
+		$consulta->execute();
+		return $consulta->rowCount() ? true : false;	
+	}
+
 	public static function VerificarMailDoctor($mailYPerfil){
 		
 		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 

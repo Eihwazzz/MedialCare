@@ -267,8 +267,20 @@ app.service('srvDoctores', function($http,$q){
       });
           return defer.promise;
     };
+  var turnoAsistencia = function(idTurno, opcion){
+  var defer = $q.defer();
+    $http.put('../TPFinalServices/Datos/index.php/marcarTurno/',{turno: idTurno, asistencia: opcion})
+      .then(function(response){
+        console.log(response);
+          defer.resolve(response);
+      },function(response) {
+            defer.reject(response);
+      });
+          return defer.promise;
+    };
   return{
-    traerDomicilioDoctor: traerDomDoctor
+    traerDomicilioDoctor: traerDomDoctor,
+    marcarTurno: turnoAsistencia
   };
 });
 app.service('srvVerificarCodigoDoctor', function($http,$q){

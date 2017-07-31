@@ -261,6 +261,21 @@ $app->get('/chequearCodigo[/{codigo}]', function ($request, $response, $args) {
     }
     return $listado;
 });
+$app->put('/marcarTurno[/]', function ($request, $response, $args) {
+    $body = $request->getBody();
+    //$body = json_decode(file_get_contents("php://input"));
+    //Cualquiera de los 2 sirve :)
+    $input = json_decode($body);
+    
+    $listado = Doctor::marcarAsistencia($input);
+    var_dump($listado);
+    if($listado){
+        $resultado = 'Turno Cambiado';
+    }else{
+        $resultado = 'No se pudo cambiar el turno';
+    }
+    return $resultado;
+});
 /**
  * Step 4: Run the Slim application
  *
