@@ -11,11 +11,10 @@
 		<select ng-options="perf.name as perf.name for perf in perfiles" ng-model="selectedUser" ng-change="opcionesTurnos()"></select>
 		</br>
 			<input type="search" placeholder="Buscar Opcion Elegida" style="display:block;" ng-model="miFiltro"/>
-			<table ng-if="selectedUser == 'Doctores'" class='table table-hover table-responsive' id="listaOpciones">
+			<table ng-if="selectedUser == 'Doctores'" class='table table-hover table-responsive table-doctores' id="listaOpciones">
 				<thead>
 					<tr>
 						<th>  Nombre   </th>				
-						<th>  Apellido     </th>
 						<th>  Mail   </th>
 						<th>  Telefono     </th>
 						<th>  Especialidad  </th>
@@ -26,7 +25,6 @@
 				<tr ng-repeat="opcion in ListadoOpciones|filter:miFiltro as resultado" contenteditable="{{editmode ? true : false}}">
 
 					<td>{{opcion.nombre}}</td>
-					<td>{{opcion.apellido}}</td>
 					<td>{{opcion.mail}}</td>
 					<td>{{opcion.telefono}}</td>
 					<td>{{opcion.nombre_espec}}</td>

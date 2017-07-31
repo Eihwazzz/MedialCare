@@ -182,6 +182,9 @@ div.radioDiv {
 .tabla-especialidades{
 	width: auto !important;
 }
+.table-doctores{
+	width: auto !important;
+}
 .formMapa{
 	float:left;
 	display:grid;

@@ -294,10 +294,12 @@ calculateAndDisplayRoute(
       $scope.turnoAEnviar = angular.copy($scope.turno);
       $scope.turnoAEnviar.hora = $scope.turnoAEnviar.hora + ':00:00';
       $scope.turnoAEnviar.nombreEspec = $scope.especialidad;
-      alert(typeof $scope.turno.fecha);
+      //alert(typeof $scope.turno.fecha);
+
       
       ServiceGuardarTurno.guardarTurno($scope.turnoAEnviar).then(function(respuesta){
         console.log(respuesta);
+        $state.go('grillaTurnos');
       },function(error) {
         console.log('unable to get the data', error);
       });
@@ -589,7 +591,13 @@ ServiceGrillaAdmin.getdoctores().then(function(respuesta){
       {name:'nombre_espec',fieldName:'Especialidad',displayName:'Especialidad'},
       //{name:'asistido',fieldName:'Asistido',displayName:'Asistido',cellTemplate:"<center><div ng-class='{{row.entity.asistido}} ? 'turno-asistido' : 'turno-no-asistido''>{{row.entity.asistido ? 'Asistido' : 'No Asistido'}}</div></center>", width:"120"},
       {name:'asistido',fieldName:'Asistido',displayName:'Asistido', width:"120",
-          cellTemplate:"<center><div>{{row.entity.asistido ? 'Asistido' : 'No Asistido'}}</div></center>",
+          cellTemplate:function(dsasda){
+            if(payload.perfil === 'Doctor'){
+              return "<center><div>{{row.entity.asistido != null && row.entity.asistido != undefined ? (row.entity.asistido ? 'Asistido' : 'No Asistido') : ''}}<button style='width:66.58px;font-size:x-small;' ng-if='row.entity.asistido == null || row.entity.asistido == undefined' ng-click='grid.appScope.turnoAsistido()'>Asistido</button><button style='font-size:x-small;' ng-if='row.entity.asistido == null || row.entity.asistido == undefined' ng-click='grid.appScope.turnoNoAsistido()'>No Asistido</button></div></center>";
+            }else{
+              return "<center><div>{{row.entity.asistido != null && row.entity.asistido != undefined ? (row.entity.asistido ? 'Asistido' : 'No Asistido') : 'Pendiente'}}</div></center>";
+            }
+          },
           cellClass: function(grid, row, col, rowRenderIndex, colRenderIndex) {
           if (grid.getCellValue(row,col) == 1) {
             return 'turno-asistido';
