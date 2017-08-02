@@ -152,6 +152,10 @@ $app->get('/getdoctoresturnos[/{perfil}]', function ($request, $response, $args)
             return "Fallo algo";
         }
 });
+$app->get('/getdoctoresturnosporespecialidad[/{especialidad}]', function ($request, $response, $args) {
+    $listado = Doctor::TraerTodosLosDoctoresTurnosPorEspecialidad($args['especialidad']);
+    return json_encode($listado);
+});
 $app->put('/modificarPaciente[/]', function($request, $response, $args) {
     $body = $request->getBody();
     //$body = json_decode(file_get_contents("php://input"));

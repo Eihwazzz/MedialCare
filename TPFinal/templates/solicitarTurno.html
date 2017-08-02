@@ -67,7 +67,7 @@
 				<tbody class="grillaUsuarios">
 				<tr ng-repeat="opcion in ListadoOpciones|filter:miFiltro as resultado" contenteditable="{{editmode ? true : false}}">
 
-					<td>{{opcion.nombre_espec}}</td>
+					<td style="cursor:pointer;" ng-click="traerDoctoresPorEspecialidad(opcion.cod_espec)">{{opcion.nombre_espec}}</td>
 				
 				</tr>
 				

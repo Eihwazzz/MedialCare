@@ -26,6 +26,7 @@
 						<th>  Foto   </th>				
 						<th>  Nombre     </th>
 						<th>  Mail   </th>
+						<th>  Telefono  </th>
 						<th>  BORRAR     </th>
 						<th>  MODIFICAR  </th>
 					</tr> 
@@ -36,6 +37,7 @@
 					<td class="col-lg-1"><img  class='fotoGrilla' ng-src="../TPFinalServices/Datos/fotos/{{persona.foto}}" /></td>
 					<td>{{persona.nombre}}</td>
 					<td>{{persona.mail}}</td>
+					<td>{{persona.telefono}}</td>
 
 					<td><button class='btn btn-danger' name='Borrar' ng-click="Borrar(persona.id_administrador)">   <span class='glyphicon glyphicon-remove-circle'>&nbsp;</span>Borrar</button></td>
 					

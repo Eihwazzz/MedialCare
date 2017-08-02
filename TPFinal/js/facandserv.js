@@ -90,9 +90,19 @@ app.service('ServiceTraerDoctoresTurnos', function($http,$q){
         defer1.reject(response);
     });
       return defer1.promise;
-  }; 
+  };
+  var doctoresPorEspecialidad = function(idEspecialidad){
+    var defer1 = $q.defer();
+     $http.get('../TPFinalServices/Datos/index.php/getdoctoresturnosporespecialidad/' + idEspecialidad).then(function(response){
+      defer1.resolve(response.data);
+    },function(response) {
+        defer1.reject(response);
+    });
+      return defer1.promise;
+  };
     return{
-      getdoctores: doctores
+      getdoctores: doctores,
+      getDoctoresPorEspecialidad: doctoresPorEspecialidad
     };
 });
 app.service('ServiceTraerDoctorPorId', function($http,$q){

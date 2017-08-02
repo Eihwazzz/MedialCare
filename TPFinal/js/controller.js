@@ -238,6 +238,18 @@ calculateAndDisplayRoute(
   $scope.volver = function(){
     $state.go('menu');
   };
+
+  $scope.traerDoctoresPorEspecialidad = function(idEspecialidad){
+    ServiceTraerDoctoresTurnos.getDoctoresPorEspecialidad(idEspecialidad)
+      .then(function(respuesta){
+        //console.log(respuesta);
+        $scope.selectedUser = 'Doctores';
+        $scope.ListadoOpciones = respuesta;
+      },function(error) {
+        console.log('unable to get the data', error);
+      });
+  }
+
   $scope.opcionesTurnos = function(){
     if($scope.selectedUser === 'Doctores')
     {

@@ -55,6 +55,17 @@ class Doctor
 		$arrDoctores= $consulta->fetchAll(PDO::FETCH_CLASS, "doctor");	
 		return $arrDoctores;
 	}
+
+    public static function TraerTodosLosDoctoresTurnosPorEspecialidad($idEspecialidad)
+	{
+		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
+		$consulta =$objetoAccesoDato->RetornarConsulta("select doc.*, esp.nombre_espec from doctores doc, med_espec me, especialidades esp where doc.cod_doctor = me.cod_med and esp.cod_espec = me.cod_espec and esp.cod_espec = :idEspecialidad");
+		$consulta->bindValue(':idEspecialidad',$idEspecialidad, PDO::PARAM_INT);
+		$consulta->execute();	
+		$arrDoctores= $consulta->fetchAll(PDO::FETCH_CLASS, "doctor");	
+		return $arrDoctores;
+	}
+
 	public static function ChequearUsuario($email,$clave){
 		
 		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
