@@ -155,7 +155,7 @@ class Paciente
 	public static function InsertarPacienteConDomicilio($persona)
 	{
 		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
-		$consulta =$objetoAccesoDato->RetornarConsulta("INSERT into pacientes (nombre,mail,clave,foto,latitud,longitud)values(:nombre,:mail,:clave,:foto,:latitud,:longitud)");
+		$consulta =$objetoAccesoDato->RetornarConsulta("INSERT into pacientes (nombre,mail,clave,foto,latitud,longitud,telefono)values(:nombre,:mail,:clave,:foto,:latitud,:longitud,:telefono)");
 		//$consulta =$objetoAccesoDato->RetornarConsulta("CALL InsertarPersona (:nombre,:apellido,:dni,:foto)");
 		$consulta->bindValue(':nombre',$persona->nombre, PDO::PARAM_STR);
 		$consulta->bindValue(':mail', $persona->mail, PDO::PARAM_STR);
@@ -163,6 +163,7 @@ class Paciente
 		$consulta->bindValue(':foto', $persona->foto, PDO::PARAM_STR);
 		$consulta->bindValue(':latitud', $persona->latitud, PDO::PARAM_STR);
 		$consulta->bindValue(':longitud', $persona->longitud, PDO::PARAM_STR);
+		$consulta->bindValue(':telefono', $persona->telefono, PDO::PARAM_STR);
 		$consulta->execute();		
 		return $objetoAccesoDato->RetornarUltimoIdInsertado();
 	
@@ -172,12 +173,13 @@ class Paciente
         public static function ModificarPaciente($paciente)
 	{
 		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
-		$consulta =$objetoAccesoDato->RetornarConsulta("UPDATE pacientes set nombre=:nombre,mail=:mail,clave=:clave,foto=:foto WHERE id_paciente=:id");
+		$consulta =$objetoAccesoDato->RetornarConsulta("UPDATE pacientes set nombre=:nombre,mail=:mail,clave=:clave,foto=:foto,telefono=:telefono WHERE id_paciente=:id");
 		$consulta->bindValue(':id',$paciente->id, PDO::PARAM_INT);
 		$consulta->bindValue(':nombre',$paciente->nombre, PDO::PARAM_STR);
 		$consulta->bindValue(':mail',$paciente->mail, PDO::PARAM_STR);
 		$consulta->bindValue(':clave', $paciente->clave, PDO::PARAM_STR);
 		$consulta->bindValue(':foto', $paciente->foto, PDO::PARAM_STR);
+		$consulta->bindValue(':telefono', $paciente->telefono, PDO::PARAM_STR);
 		return $consulta->execute();		
 		//return $objetoAccesoDato->RetornarUltimoIdInsertado();
 	

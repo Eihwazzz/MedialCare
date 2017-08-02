@@ -110,12 +110,13 @@ class Administrador
 	public static function InsertarAdministrador($persona)
 	{
 		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
-		$consulta =$objetoAccesoDato->RetornarConsulta("INSERT into administradores (nombre,mail,clave,foto)values(:nombre,:mail,:clave,:foto)");
+		$consulta =$objetoAccesoDato->RetornarConsulta("INSERT into administradores (nombre,mail,clave,foto,telefono)values(:nombre,:mail,:clave,:foto,:telefono)");
 		//$consulta =$objetoAccesoDato->RetornarConsulta("CALL InsertarPersona (:nombre,:apellido,:dni,:foto)");
 		$consulta->bindValue(':nombre',$persona->nombre, PDO::PARAM_STR);
 		$consulta->bindValue(':mail', $persona->mail, PDO::PARAM_STR);
 		$consulta->bindValue(':clave', $persona->clave, PDO::PARAM_STR);
 		$consulta->bindValue(':foto', $persona->foto, PDO::PARAM_STR);
+		$consulta->bindValue(':telefono', $persona->telefono, PDO::PARAM_STR);
 		$consulta->execute();		
 		return $objetoAccesoDato->RetornarUltimoIdInsertado();
 	
@@ -125,12 +126,13 @@ class Administrador
 	public static function ModificarAdministrador($administrador){
 
 		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
-		$consulta =$objetoAccesoDato->RetornarConsulta("UPDATE administradores set nombre=:nombre,mail=:mail,clave=:clave,foto=:foto WHERE id_administrador=:id");
+		$consulta =$objetoAccesoDato->RetornarConsulta("UPDATE administradores set nombre=:nombre,mail=:mail,clave=:clave,foto=:foto,telefono=:telefono WHERE id_administrador=:id");
 		$consulta->bindValue(':id',$administrador->id, PDO::PARAM_INT);
 		$consulta->bindValue(':nombre',$administrador->nombre, PDO::PARAM_STR);
 		$consulta->bindValue(':mail',$administrador->mail, PDO::PARAM_STR);
 		$consulta->bindValue(':clave', $administrador->clave, PDO::PARAM_STR);
 		$consulta->bindValue(':foto', $administrador->foto, PDO::PARAM_STR);
+		$consulta->bindValue(':telefono', $administrador->telefono, PDO::PARAM_STR);
 		return $consulta->execute();		
 		//return $objetoAccesoDato->RetornarUltimoIdInsertado();
 	}

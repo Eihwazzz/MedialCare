@@ -96,7 +96,7 @@ app.config(function($stateProvider, $urlRouterProvider, $authProvider) {
     }
   })
   .state('modificar', {
-    url: '/modificar/{{:id}?:nombre:mail:clave:foto:perfil}',
+    url: '/modificar/{{:id}?:nombre:mail:clave:foto:perfil,:telefono}',
     views: {
       'principal': { templateUrl: 'templates/templateAlta.html',controller: 'templateModificarCtrl' },
       'menuSuperior': {templateUrl: 'templates/menuSup.html',controller: 'menuSupCtrl'},

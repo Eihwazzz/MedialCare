@@ -34,6 +34,7 @@ angular.module('MyFinalWeb.MyController',[])
           $scope.paciente.nombre = respuesta.nombre;
           $scope.paciente.mail = respuesta.mail;
           $scope.paciente.clave = respuesta.clave;
+          $scope.paciente.telefono = respuesta.telefono;
 
         },function(error) {
           console.log('unable to get the data', error);
@@ -746,15 +747,14 @@ ServiceGrillaAdmin.getdoctores().then(function(respuesta){
   });*/
     $scope.modificar2 = function(usuario){
       console.log(usuario);
-      debugger;
       if(usuario.id_administrador !== undefined){
-          $state.go('modificar',{id:usuario.id_administrador,nombre:usuario.nombre,mail:usuario.mail,clave:usuario.clave,foto:usuario.foto,perfil:'administrador'});
+          $state.go('modificar',{id:usuario.id_administrador,nombre:usuario.nombre,mail:usuario.mail,clave:usuario.clave,foto:usuario.foto,perfil:'administrador',telefono:usuario.telefono});
         }
         if(usuario.id_paciente !== undefined){
-          $state.go('modificar',{id:usuario.id_paciente,nombre:usuario.nombre,mail:usuario.mail,clave:usuario.clave,foto:usuario.foto,perfil:'paciente'});
+          $state.go('modificar',{id:usuario.id_paciente,nombre:usuario.nombre,mail:usuario.mail,clave:usuario.clave,foto:usuario.foto,perfil:'paciente',telefono:usuario.telefono});
         }
         if(usuario.cod_doctor !== undefined){
-          $state.go('modificar',{id:usuario.cod_doctor,nombre:usuario.nombre,mail:usuario.mail,clave:usuario.clave,foto:usuario.foto,perfil:'doctor'});
+          $state.go('modificar',{id:usuario.cod_doctor,nombre:usuario.nombre,mail:usuario.mail,clave:usuario.clave,foto:usuario.foto,perfil:'doctor',telefono:usuario.telefono});
         }
     };
 
@@ -840,6 +840,7 @@ ServiceGrillaAdmin.getdoctores().then(function(respuesta){
 	$scope.persona.clave= "1234" ;
 	$scope.persona.mail= "example@hotmail.com" ;
 	$scope.persona.foto="pordefecto.png";	
+  $scope.persona.telefono="42434535";
   	ServiceCargadorDeFotos.cargarFoto($scope.persona.foto,$scope.uploader);
 
   	$scope.uploader.onSuccessItem = function(item, response, status, headers) {
@@ -987,6 +988,7 @@ ServiceGrillaAdmin.getdoctores().then(function(respuesta){
   $scope.persona.clave = $stateParams.clave;
   $scope.persona.foto = $stateParams.foto;
   $scope.persona.perfil = $stateParams.perfil;
+  $scope.persona.telefono = $stateParams.telefono;
   
  /*$scope.cargarFoto = function(nombreDeFoto){
     var direccion = "fotos/"+nombreDeFoto;
