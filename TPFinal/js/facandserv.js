@@ -283,6 +283,22 @@ app.service('srvDoctores', function($http,$q){
     marcarTurno: turnoAsistencia
   };
 });
+app.service('srvPacientes', function($http,$q){
+  var traerDomPaciente = function(idPaciente){
+  var defer = $q.defer();
+    $http.get('../TPFinalServices/Datos/index.php/traerDomicilioPaciente/'+idPaciente)
+      .then(function(response){
+        console.log(response);
+          defer.resolve(response);
+      },function(response) {
+            defer.reject(response);
+      });
+          return defer.promise;
+    };
+  return{
+    traerDomicilioPaciente: traerDomPaciente
+  };
+});
 app.service('srvVerificarCodigoDoctor', function($http,$q){
   var verificaCodigo = function(codigo){
   var defer = $q.defer();

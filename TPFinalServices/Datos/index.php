@@ -225,6 +225,10 @@ $app->get('/traerDomicilioDoctor[/{id}]', function ($request, $response, $args) 
     $domicilio = Doctor::TraerDomicilioDoctor($args['id']);
     return json_encode($domicilio);
 });
+$app->get('/traerDomicilioPaciente[/{id}]', function ($request, $response, $args) {
+    $domicilio = Paciente::TraerDomicilioPaciente($args['id']);
+    return json_encode($domicilio);
+});
 $app->get('/traerTodosLosTurnos[/]', function ($request, $response, $args) {
     $turnos = Turno::TraerTurnos();
     return json_encode($turnos);

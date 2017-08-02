@@ -570,8 +570,8 @@ ServiceGrillaAdmin.getdoctores().then(function(respuesta){
       }
     };
 
-    $scope.verMapa = function(idDoctor){
-      $state.go('verMapa',{idDoctor:idDoctor});
+    $scope.verMapa = function(id){
+      $state.go('verMapa',{id:id,perfil:payload.perfil});
     }
 
     $scope.turnoNoAsistido = function(idTurno){
@@ -629,7 +629,15 @@ ServiceGrillaAdmin.getdoctores().then(function(respuesta){
           return 'turno-no-asistido';
         }
       },
-      {name:'iconoMapa',displayName:'Ver Mapa',cellTemplate:"<center><div class='mapIcon' ng-click='grid.appScope.verMapa(row.entity.cod_doctor);'></div></center>", width:"120"}
+      {name:'iconoMapa',displayName:'Ver Mapa', width:"120",
+        cellTemplate:function(dsaf){
+          if(payload.perfil === 'Doctor'){
+            return "<center><div class='mapIcon' ng-click='grid.appScope.verMapa(row.entity.id_paciente);'></div></center>";   
+          }else{
+            return "<center><div class='mapIcon' ng-click='grid.appScope.verMapa(row.entity.cod_doctor);'></div></center>";   
+          }
+        }
+      }
     ],
     enableGridMenu: true,
     enableSelectAll: true,

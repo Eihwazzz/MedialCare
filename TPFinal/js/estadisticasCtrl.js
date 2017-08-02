@@ -26,7 +26,7 @@ app.controller('estadisticasCtrl',function($scope,$http,$auth,$state,srvGraficos
         if(objetoGrafico[j].MES > $scope.maximoMes){
           $scope.maximoMes = objetoGrafico[j].MES;
         }
-        $scope.objetoEspecialidades[objetoGrafico[j].nombre_espec].push({cantidad:objetoGrafico[j].CANT_ESPEC,mes:objetoGrafico[j].MES});
+        $scope.objetoEspecialidades[objetoGrafico[j].nombre_espec].push({cantidad:parseInt(objetoGrafico[j].CANT_ESPEC),mes:parseInt(objetoGrafico[j].MES)});
       }
       $scope.objetoCompletoGrafico = angular.copy($scope.objetoEspecialidades);
       for(var k=1;k<=$scope.maximoMes;++k){
@@ -95,7 +95,7 @@ app.controller('estadisticasCtrl',function($scope,$http,$auth,$state,srvGraficos
 
       plotOptions: {
           series: {
-              pointStart: $scope.estadisticasLineal[0].MES
+              pointStart: parseInt($scope.estadisticasLineal[0].MES)
           }
       },
 

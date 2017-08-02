@@ -14,7 +14,7 @@ app.controller('estadisticasEspecialidadesCtrl',function($scope,$http,$auth,$sta
     .then(function(respuesta){
         console.log(respuesta);
         for(var i=0;i<respuesta.length;++i){
-            $scope.cantidadDoctoresPorEspecialidad.push({name:respuesta[i].nombre_espec,y:respuesta[i].cantidad});
+            $scope.cantidadDoctoresPorEspecialidad.push({name:respuesta[i].nombre_espec,y:parseInt(respuesta[i].cantidad)});
         }
 
         Highcharts.chart('containerEsdisticasCirculo', {

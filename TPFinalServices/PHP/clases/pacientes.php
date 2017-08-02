@@ -141,6 +141,17 @@ class Paciente
 				
 	}
 
+	public static function TraerDomicilioPaciente($id) {	
+
+		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
+		$consulta =$objetoAccesoDato->RetornarConsulta("select latitud,longitud from pacientes where id_paciente=:id");
+		$consulta->bindValue(':id',$id, PDO::PARAM_INT);
+		$consulta->execute();
+		$personaBuscada= $consulta->fetchObject('paciente');
+		return $personaBuscada;	
+					
+	}
+
 	public static function InsertarPacienteConDomicilio($persona)
 	{
 		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 

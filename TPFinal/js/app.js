@@ -112,7 +112,7 @@ app.config(function($stateProvider, $urlRouterProvider, $authProvider) {
     }
   })
     .state('verMapa', {
-    url: '/verMapa/{{:idDoctor}?}',
+    url: '/verMapa/{{:id}?:perfil?}',
     views: {
       'principal': { templateUrl: 'templates/verEnMapa.html',controller: 'mapaRealCtrl' },
       'menuSuperior': {templateUrl: 'templates/menuSup.html',controller: 'menuSupCtrl'},
