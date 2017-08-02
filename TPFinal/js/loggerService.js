@@ -1,14 +1,31 @@
-app.factory('srvLogger', function($q, $http){
-   var administradores = function(){
-   var defer3 = $q.defer();
-     $http.get('../Lab4/TPFinal/TPFinalServices/Datos/index.php/getusuarios/administradores').then(function(response){
-      defer3.resolve(response.data);
+app.factory('srvLogger', function($q, $http,$filter){
+   var insertaLog = function(datos){
+    var fecha = new Date();
+    var tiempoDeLogeo = $filter('date')(fecha,'medium');
+    datos.accion = datos.accion + tiempoDeLogeo;
+    var deferLog = $q.defer();
+    
+     $http.post('../TPFinalServices/Datos/index.php/insertarLog',{info:datos})
+      .then(function(response){
+      deferLog.resolve(response.data);
     },function(response) {
-        defer3.reject(response);
+        deferLog.reject(response);
     });
-      return defer3.promise;
+      return deferLog.promise;
     };
+    var getIp = function(){
+    var defer2 = $q.defer();
+     $http.get('https://freegeoip.net/json/')
+      .then(function(response){
+      defer2.resolve(response.data);
+    },function(response) {
+        defer2.reject(response);
+    });
+      return defer2.promise;
+    };
+    //https://freegeoip.net/json
     return{
-      getadmins: administradores
+      insertarLog: insertaLog,
+      getIpAdress: getIp
     };
 });

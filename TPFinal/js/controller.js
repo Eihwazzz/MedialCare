@@ -320,11 +320,11 @@ calculateAndDisplayRoute(
     };
 
     Date.prototype.yyyymmdd = function() {
-  var mm = (this.getMonth() + 1).toString(); // getMonth() is zero-based
-  var dd = this.getDate().toString();
+      var mm = (this.getMonth() + 1).toString(); // getMonth() is zero-based
+      var dd = this.getDate().toString();
 
-  return [this.getFullYear(), mm.length===2 ? '' : '0', mm, dd.length===2 ? '' : '0', dd].join(''); // padding
-};
+      return [this.getFullYear(), mm.length===2 ? '' : '0', mm, dd.length===2 ? '' : '0', dd].join(''); // padding
+    };
 
     function toJSONLocal (date) {
     var local = new Date(date);
@@ -332,11 +332,12 @@ calculateAndDisplayRoute(
     return local.toJSON().slice(0, 10);
 }
 })
-.controller('loginCtrl', function($scope, $http, $auth, $state, srvRecuperacion,srvVerificarCodigoDoctor) {
+.controller('loginCtrl', function($scope, $http, $auth, $state, srvRecuperacion,srvVerificarCodigoDoctor,srvLogger,$rootScope) {
 	if(!$auth.isAuthenticated())
     {
       $state.go('login');
     }
+  $rootScope.objetoLog = {};
 
   $scope.mostrarDatosRecupero = false;
   $scope.mostrarInputDoctor = false;
@@ -460,8 +461,34 @@ calculateAndDisplayRoute(
 		      console.info("Respuesta", respuestaAuth); 
 		      if($auth.isAuthenticated())
 		      {
-		      	var payload = $auth.getPayload();
+            /*srvLogger.getIpAdress()
+            .then(function(respuesta){
+              console.log(respuesta);
+            })*/
+            var payload = $auth.getPayload();
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    var respuesta = JSON.parse(xhttp.responseText);
+                    $rootScope.objetoLog.ip = respuesta.ip;
+                    $rootScope.objetoLog.pais = respuesta.country_name;
+                    $rootScope.objetoLog.usuario = payload.nombre;
+                    $rootScope.objetoLog.mail = payload.mail;
+                    $rootScope.objetoLog.perfil = payload.perfil;
+                    $rootScope.objetoLog.accion = 'Ingreso a la aplicacion como: ' + payload.perfil + '. ';
+                    
+                    srvLogger.insertarLog($rootScope.objetoLog)
+                    .then(function(respuesta){
+                      console.log(respuesta);
+                    })
+                    console.log($rootScope.ip);
+                    console.log($rootScope.pais);
+                }
+            };
+            xhttp.open("GET", "//freegeoip.net/json/?callback=", true);
+            xhttp.send();
 		      	console.log(payload);
+
 		      	if(payload.perfil === 'Administrador'){
 		      		$state.go('menuAdmin');
 		      	}else if(payload.perfil === 'Paciente'){

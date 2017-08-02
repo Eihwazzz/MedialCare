@@ -17,6 +17,7 @@ include_once '../PHP/clases/pacientes.php';
 include_once '../PHP/clases/administradores.php';
 include_once '../PHP/clases/doctores.php';
 include_once '../PHP/clases/turnos.php';
+include_once '../PHP/clases/logger.php';
 
  header('Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept');
 //header('Access-Control-Allow-Headers: Origin, X-Requested-With, text/plain, Content-Type, Accept, X-ACCESS_TOKEN, Access-Control-Allow-Origin, application/x-www-form-urlencoded, Authorization,Engaged-Auth-Token'); 
@@ -260,6 +261,12 @@ $app->post('/recuperarPassword[/]', function ($request, $response, $args) {
         enviar_mail($input->mail, $verifica[0]["clave"]);
     }
     return false;
+});
+$app->post('/insertarLog[/]', function ($request, $response, $args) {
+    $body = $request->getBody();
+    $input = json_decode($body);
+    $respuesta = Logger::InsertarLog($input);
+    return json_encode($respuesta);
 });
 $app->get('/chequearCodigo[/{codigo}]', function ($request, $response, $args) {
     $listado = Doctor::ChequearCodigoDoctor($args['codigo']);
