@@ -211,6 +211,39 @@ class Doctor
 				
 	}	
 
+	public static function BorrarDisponibilidad($idDoctor)
+	{	
+		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
+		$consulta =$objetoAccesoDato->RetornarConsulta("
+			DELETE FROM rel_doctor_dia 
+			WHERE cod_doctor=:id");	
+		$consulta->bindValue(':id',$idDoctor, PDO::PARAM_INT);		
+		$consulta->execute();
+		return $consulta->rowCount();
+		
+	}
+
+	public static function InsertarDiasDisponibilidad($datos)
+	{
+		try{
+		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
+		//return $datos->dias;
+		for ($i = 0; $i < count($datos->dias); $i++) {
+			//return $datos->dias[$i];
+			$consulta =$objetoAccesoDato->RetornarConsulta("INSERT into rel_doctor_dia (cod_doctor,cod_dia)values(:idDoctor,:codigo)");
+		    $consulta->bindValue(':codigo',$datos->dias[$i], PDO::PARAM_INT);
+		    $consulta->bindValue(':idDoctor', $datos->idDoctor, PDO::PARAM_INT);
+		    $consulta->execute();
+		}
+
+		return $objetoAccesoDato->RetornarUltimoIdInsertado();
+	}catch(Exception $e){
+		return $e;
+	}
+	
+				
+	}
+
 	public static function TraerDomicilioDoctor($id) {	
 
 		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 

@@ -127,6 +127,14 @@ app.config(function($stateProvider, $urlRouterProvider, $authProvider) {
       'logout': {templateUrl: 'templates/logout.html', controller: 'logoutCtrl'}
     }
   })
+    .state('disponibilidadDoctores', {
+    url: '/disponibilidadDoctores',
+    views: {
+      'principal': { templateUrl: 'templates/disponibilidadDoctores.html',controller: 'disponibilidadDoctoresCtrl' },
+      'menuSuperior': {templateUrl: 'templates/menuSup.html',controller: 'menuSupCtrl'},
+      'logout': {templateUrl: 'templates/logout.html', controller: 'logoutCtrl'}
+    }
+  })
     .state('estadisticas', {
     url: '/estadisticas',
     views: {

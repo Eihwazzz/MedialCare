@@ -165,6 +165,10 @@ $app->get('/getdoctoresturnos[/{perfil}]', function ($request, $response, $args)
             return "Fallo algo";
         }
 });
+$app->get('/traerDiasDoctor[/{idDoctor}]', function ($request, $response, $args) {
+    $listado = Turno::traerDiasDoctor($args['idDoctor']);
+    return json_encode($listado);
+});
 $app->get('/getdoctoresturnosporespecialidad[/{especialidad}]', function ($request, $response, $args) {
     $listado = Doctor::TraerTodosLosDoctoresTurnosPorEspecialidad($args['especialidad']);
     return json_encode($listado);
@@ -279,6 +283,16 @@ $app->post('/insertarLog[/]', function ($request, $response, $args) {
     $input = json_decode($body);
     $respuesta = Logger::InsertarLog($input);
     return json_encode($respuesta);
+});
+$app->delete('/borrarDiasDisponibles[/{idDoctor}]', function ($request, $response, $args) {
+    $respuesta = Doctor::BorrarDisponibilidad($args['idDoctor']);
+    return $respuesta;
+});
+$app->post('/insertarDiasDisponibles[/]', function ($request, $response, $args) {
+    $body = $request->getBody();
+    $input = json_decode($body);
+    $respuesta = Doctor::InsertarDiasDisponibilidad($input);
+    return $respuesta;
 });
 $app->get('/chequearCodigo[/{codigo}]', function ($request, $response, $args) {
     $listado = Doctor::ChequearCodigoDoctor($args['codigo']);

@@ -1,0 +1,44 @@
+<div class="container">
+	<div class="row">
+		<div class="col-xs-8 col-md-6 col-lg-4 col-xs-offset-0 col-md-offset-0 col-lg-offset-0">
+			<button class="btn btn-Primary" ng-click="volver();">
+				Volver
+			</button>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-xs-2 col-md-2 col-lg-4 col-xs-offset-2 col-md-offset-2 col-lg-offset-4">
+			<div style="color:red;">
+				<label>Seleccione sus dias disponibles</label>
+				</br>
+				<label>Los datos seleccionados</label>
+				</br>
+				<label>Reemplazaran los ya cargados</label>
+				</br>
+			</div>
+			<form>
+				<ul>
+					<li ng-repeat="dia in diasDeLaSemana">
+						<input type="checkbox" ng-model="dia.selected" ng-value="{{dia.codigo}}"> {{dia.name}}
+					</li>
+				</ul>
+				
+				</br>
+				<!--<input type="checkbox" ng-model="objetoDias.martes" ng-value="2"> Martes
+				</br>
+				<input type="checkbox" ng-model="objetoDias.miercoles" ng-value="3"> Miercoles
+				</br>
+				<input type="checkbox" ng-model="objetoDias.jueves" ng-value="4"> Jueves
+				</br>
+				<input type="checkbox" ng-model="objetoDias.viernes" ng-value="5"> Viernes
+				</br>
+				<input type="checkbox" ng-model="objetoDias.sabado" ng-value="6"> Sabado
+				</br>
+				<input type="checkbox" ng-model="objetoDias.domingo" ng-value="0"> Domingo
+				</br>-->
+				<button class="btn btn-Primary" ng-click="guardar()">Guardar</button>
+
+			</form>	
+		</div>
+	</div>
+</div>

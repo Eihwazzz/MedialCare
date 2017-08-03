@@ -230,10 +230,20 @@ app.service('srvTurnos', function($http,$q){
     });
       return deferDisponibilidad.promise;
     };
+    var diasDoctor = function(idDoctor){
+    var deferDiasDoctor = $q.defer();
+     $http.get('../TPFinalServices/Datos/index.php/traerDiasDoctor/'+idDoctor).then(function(response){
+      deferDiasDoctor.resolve(response.data);
+    },function(response) {
+        deferDiasDoctor.reject(response);
+    });
+      return deferDiasDoctor.promise;
+    };
     return{
       traerTurnos: turnos,
       traerTurnosPorDoctor: turnosPorDoctor,
-      traerDisponibilidadHoraria: disponibilidadHoraria
+      traerDisponibilidadHoraria: disponibilidadHoraria,
+      traerDiasDoctor: diasDoctor
     };
 });
 app.service('ServiceModificarPaciente', function($http,$q){
@@ -307,9 +317,33 @@ app.service('srvDoctores', function($http,$q){
       });
           return defer.promise;
     };
+    var BorrarDiasDisponibles = function(datos){
+    var deferBorrarDiasDisponibles = $q.defer();
+    $http.delete('../TPFinalServices/Datos/index.php/borrarDiasDisponibles/'+datos.id)
+      .then(function(response){
+        console.log(response);
+          deferBorrarDiasDisponibles.resolve(response);
+      },function(response) {
+            deferBorrarDiasDisponibles.reject(response);
+      });
+          return deferBorrarDiasDisponibles.promise;
+    };
+    var InsertarDiasDisponibles = function(datos){
+    var deferDiasDisponibles = $q.defer();
+    $http.post('../TPFinalServices/Datos/index.php/insertarDiasDisponibles/',{dias:datos.dias,idDoctor:datos.id})
+      .then(function(response){
+        console.log(response);
+          deferDiasDisponibles.resolve(response);
+      },function(response) {
+            deferDiasDisponibles.reject(response);
+      });
+          return deferDiasDisponibles.promise;
+    };
   return{
     traerDomicilioDoctor: traerDomDoctor,
-    marcarTurno: turnoAsistencia
+    marcarTurno: turnoAsistencia,
+    borrarDiasDisponibles: BorrarDiasDisponibles,
+    insertarDiasDisponibles: InsertarDiasDisponibles
   };
 });
 app.service('srvPacientes', function($http,$q){

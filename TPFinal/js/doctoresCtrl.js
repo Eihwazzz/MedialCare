@@ -9,6 +9,9 @@ app.controller('doctoresCtrl',function($scope,$http,$auth,$state, $timeout, $q){
     $scope.verTurnos = function(){
    		$state.go('grillaTurnos');
   	};
+    $scope.verCargaDisponibilidad = function(){
+    $state.go('disponibilidadDoctores');
+  };
     /*$scope.traerDomicilioDoctor = function(){
 	    srvDoctores.getDomDoctor()
 	    .then(function(respuesta){

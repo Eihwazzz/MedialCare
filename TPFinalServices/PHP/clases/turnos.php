@@ -134,6 +134,19 @@ class Turno
 		return $arrTurnos;
 	}
 
+	public static function traerDiasDoctor($idDoctor)
+	{
+		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
+		$consulta =$objetoAccesoDato->RetornarConsulta("
+			SELECT cod_dia 
+			FROM rel_doctor_dia 
+			WHERE cod_doctor = :idDoctor");
+		$consulta->bindValue(':idDoctor',$idDoctor, PDO::PARAM_INT);
+		$consulta->execute();
+		$arrDias= $consulta->fetchAll(PDO::FETCH_CLASS, "turno");	
+		return $arrDias;
+	}
+
 	public static function GuardarTurno($turno){
 
 		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 

@@ -291,6 +291,15 @@ calculateAndDisplayRoute(
       }
       console.log(respuesta);
     })
+    srvTurnos.traerDiasDoctor($stateParams.id)
+    .then(function(respuesta){
+      console.log(respuesta);
+      $scope.diasDoctor = [];
+      for(var j=0;j<respuesta.length;++j){
+        $scope.diasDoctor.push(parseInt(respuesta[j].cod_dia));
+      }
+    })
+    
     $scope.volver = function(){
       $state.go('solicitarTurno');
     };
@@ -313,7 +322,8 @@ calculateAndDisplayRoute(
           /*var arrayPrueba = ["2017-08-22"];
           var string = jQuery.datepicker.formatDate('yy-mm-dd', date);
           var isDisabled = $scope.fechasIso.indexOf(string) == -1;*/
-          return [ day != 0 && day !=6 ]
+          var isEnabled = $scope.diasDoctor.indexOf(day) != -1;
+          return [ isEnabled]
     },
       minDate: new Date(),
       onSelect: function(dateText, instance){
@@ -328,6 +338,9 @@ calculateAndDisplayRoute(
           $scope.horaSeleccionada = respuesta[0];
           $scope.horarios = respuesta;
         })
+        .catch(function(parametro){
+          alert("El doctor no tiene horarios disponibles para ese dia");
+        });
       }
     });
     $scope.turno = {};
@@ -351,7 +364,8 @@ calculateAndDisplayRoute(
       console.log($scope.turno);
       
       $scope.turnoAEnviar = angular.copy($scope.turno);
-      $scope.turnoAEnviar.hora = $scope.turnoAEnviar.hora + ':00:00';
+      //$scope.turnoAEnviar.hora = $scope.turnoAEnviar.hora + ':00:00';
+      $scope.turnoAEnviar.hora = $scope.horaSeleccionada.hora;
       $scope.turnoAEnviar.nombreEspec = $scope.especialidad;
       /*var fechaElegidaParseada = $scope.turno.fecha.split('/');
       var fechaElegidaIsoAux = new Date(fechaElegidaParseada[2],fechaElegidaParseada[1]-1,fechaElegidaParseada[0]);
