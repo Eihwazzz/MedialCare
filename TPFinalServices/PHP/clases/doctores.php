@@ -154,11 +154,10 @@ class Doctor
 		return $listado;
 	}
 	
-	public static function BorrarPersona($idParametro)
+	public static function BorrarDoctor($idParametro)
 	{	
 		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
-		//$consulta =$objetoAccesoDato->RetornarConsulta("delete from persona	WHERE id=:id");	
-		$consulta =$objetoAccesoDato->RetornarConsulta("CALL BorrarPersona(:id)");	
+		$consulta =$objetoAccesoDato->RetornarConsulta("delete from doctores WHERE cod_doctor=:id");	
 		$consulta->bindValue(':id',$idParametro, PDO::PARAM_INT);		
 		$consulta->execute();
 		return $consulta->rowCount();

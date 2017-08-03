@@ -31,6 +31,7 @@ app.controller('registroDoctorCtrl',function($scope,ServiceCargadorDeFotos,$http
 	$scope.persona.clave= "1234" ;
 	$scope.persona.mail= "example@hotmail.com" ;
 	$scope.persona.foto="pordefecto.png";	
+  $scope.persona.telefono="42434535";
   	ServiceCargadorDeFotos.cargarFoto($scope.persona.foto,$scope.uploader);
 
   	$scope.uploader.onSuccessItem = function(item, response, status, headers) {
@@ -76,7 +77,32 @@ app.controller('registroDoctorCtrl',function($scope,ServiceCargadorDeFotos,$http
       var markersArray = [];
       var directionsDisplay = new google.maps.DirectionsRenderer;
       var pos = {};
-      if (navigator.geolocation) {
+      
+      pos.lat = -34.6623101;
+      pos.lng = -58.3668938;
+      var myLatLng = {lat: pos.lat, lng: pos.lng};
+      var map = new google.maps.Map(document.getElementById('mapPaciente'), {
+            zoom: 15,
+            center: {lat: pos.lat, lng: pos.lng}
+          });
+
+      var infoWindow = new google.maps.InfoWindow({map: map});
+      marker = new google.maps.Marker({
+        position: myLatLng,
+        map: map,
+        title: 'Location'
+      });
+      markersArray.push(marker);
+
+      function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+        infoWindow.setPosition(pos);
+        infoWindow.setContent(browserHasGeolocation ?
+                              'Error: The Geolocation service failed.' :
+                              'Error: Your browser doesn\'t support geolocation.');
+      }    
+      directionsDisplay.setMap(map);
+
+      /*if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(function(position) {
           pos = {
             lat: position.coords.latitude,
@@ -102,7 +128,7 @@ app.controller('registroDoctorCtrl',function($scope,ServiceCargadorDeFotos,$http
       } else {
         // Browser doesn't support Geolocation
         handleLocationError(false, infoWindow, map.getCenter());
-      }
+      }*/
     }
 
     

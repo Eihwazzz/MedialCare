@@ -5,6 +5,10 @@ myApp.controller('mapaRealCtrl',function($scope,$http,$auth,$state, $timeout, $q
 	if(!$auth.isAuthenticated()){
       $state.go('login');
     }
+
+	$scope.volver = function(){
+		$state.go('grillaTurnos');
+	}
     $scope.uploader = new FileUploader({url: '../TPFinalServices/Datos/index.php/subirimagen'});
 	$scope.uploader.queueLimit = 1;
 

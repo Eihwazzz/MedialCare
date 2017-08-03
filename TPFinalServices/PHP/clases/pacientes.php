@@ -96,15 +96,17 @@ class Paciente
 		return $arrPersonas;
 	}
 	
-	public static function BorrarPersona($idParametro)
+	public static function BorrarPaciente($idParametro)
 	{	
-		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
-		//$consulta =$objetoAccesoDato->RetornarConsulta("delete from persona	WHERE id=:id");	
-		$consulta =$objetoAccesoDato->RetornarConsulta("CALL BorrarPersona(:id)");	
-		$consulta->bindValue(':id',$idParametro, PDO::PARAM_INT);		
-		$consulta->execute();
-		return $consulta->rowCount();
-		
+		try{
+			$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
+			$consulta =$objetoAccesoDato->RetornarConsulta("delete from pacientes WHERE id_paciente=:id");	
+			$consulta->bindValue(':id',$idParametro, PDO::PARAM_INT);		
+			$consulta->execute();
+			return $consulta->rowCount();
+		}catch(Exception $e){
+			return $e;
+		}
 	}
 	
 	public static function ModificarPersona($persona)

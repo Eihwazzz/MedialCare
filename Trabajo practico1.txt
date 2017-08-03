@@ -1,0 +1,48 @@
+26 MAYO :
+ABM COMPLETO , CON LOGIN / 2 entidades de ser posible
+
+2 de junio 
+projecto por lo menos casi armado
+
+
+9 de junio
+generacion de documentos: PDF y quizas excel tmb
+generacion de graficos estadisticos: 
+
+
+16 de junio
+geolocalizacion:
+requerimientos no funcionales:
+
+23 de junio
+PARCIAL
+
+30 de junio
+recuperatorio 1º parcial
+revision final del tp
+
+
+Entrega de TP el final ( se puede entregar el 30 si esta hecho)
+
+todos los tps pediran cosas como  (login, geolocalizacion, 
+guardar acciones del usuario, alguna manera de comunicarse tipo mail
+por si el usuario pierde pass o alguna otra cosa)
+Todos los controles (check box, radio, date time
+Trabajo practico "B"
+
+
+registro de turnos medicos, dueño de una clinica o una empresa de prestadoras medicas
+puedo tener a mis medicos en mi hospital o en cualquier lugar.
+Meterse en la app, logearse (cliente) sacar turno o ver los turnos que tengo.
+Apretar boton y ver donde esta el consultorio y puedo editar mis datos si soy un paciente.
+Puedo elegir un medico o una especialidad y me aparece que dia esta
+y si elijo una especialidad , que medicos hay para esa espec.
+Los doctores se dan de alta solos, con disponibilidad, tambien ven los turnos
+Los tiempos de turnos reales.
+Formulario y alta por especialidad para que el medico pueda dar su propia alta,
+localizacion del doctor y del cliente. Cliente: la ubicacion donde esta
+
+estadisticas de la base de datos(consulta)	
+quien no vino a tomar el turno, etc.
+
+boton que hardcodeado logee administrador, usuarios  e invitado

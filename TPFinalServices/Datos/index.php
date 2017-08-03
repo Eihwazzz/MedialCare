@@ -92,7 +92,7 @@ $app->post('/GuardarTurno[/]', function($request, $response, $args) {
     
         
 });
-$app->delete('/borrarusuario[/{iduser}]', function ($request, $response, $args) {
+$app->delete('/borrarusuario[/{iduser}/{perfil}]', function ($request, $response, $args) {
     //ARREGLAR EL METODO BORRARADMINISTRADOR ME PARECE QUE ES
     //var_dump();
     $body = $request->getBody();
@@ -101,7 +101,21 @@ $app->delete('/borrarusuario[/{iduser}]', function ($request, $response, $args) 
     //var_dump($input->idusuario->data);
     $objDatos = json_decode(file_get_contents("php://input"));
     //var_dump($args['iduser']);
-    Administrador::BorrarAdministrador($args['iduser']);
+    //return $args['perfil'];
+    if($args['perfil'] == 'Paciente'){
+            $listado = Paciente::BorrarPaciente($args['iduser']);
+            return json_encode($listado);
+        }else if($args['perfil'] == 'Administrador'){
+            $listado = Administrador::BorrarAdministrador($args['iduser']);
+            return json_encode($listado);
+        }else if($args['perfil'] == 'Doctor'){
+            $listado = Doctor::BorrarDoctor($args['iduser']);
+            return json_encode($listado);
+        }
+        else{
+            return "Fallo algo";
+        }
+    
     //echo intval($objDatos->idusuario);
     /*$answer = array( 'answer' => 'Administrador Borrado!' );
     $json = json_encode( $answer );

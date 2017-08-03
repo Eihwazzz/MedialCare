@@ -429,8 +429,12 @@ calculateAndDisplayRoute(
   $scope.envioMail = function(){
     srvRecuperacion.recuperarPassword($scope.datosRecupero.mailPassword, $scope.datosRecupero.perfilRecupero.name)
     .then(function(respuesta){
+      $scope.mostrarDatosRecupero = false;
       console.log(respuesta);
-    })
+      alert("El mail fue enviado");
+    }).catch(function(parametro){
+      alert("Ocurrio un error");
+    });
   }
 
   $scope.registrarDoctor = function(codigo){
@@ -862,10 +866,21 @@ ServiceGrillaAdmin.getdoctores().then(function(respuesta){
         }
     };
 
-    $scope.Borrar = function(id){
-	    $http.delete('../TPFinalServices/Datos/index.php/borrarusuario/'+id)
+    $scope.Borrar = function(persona){
+      var idParametro;
+      if(persona.id_administrador){
+        idParametro = persona.id_administrador;
+      }else if(persona.cod_doctor){
+        idParametro = persona.cod_doctor;
+      }else if(persona.id_paciente){
+        idParametro = persona.id_paciente;
+      }else{
+        alert('Ocurrio un error');
+      }
+      
+	    $http.delete('../TPFinalServices/Datos/index.php/borrarusuario/'+idParametro+'/'+$scope.selectedUser)
 	 	.then(function(respuesta) {     	
-	 		console.log("Respuesta: "+respuesta);
+	 		console.log(respuesta);
 	      	$state.go($state.current, {}, {reload: true});
 	    },function errorCallback(response) {
 	     		$scope.ListadoPersonas= [];
