@@ -24,8 +24,19 @@ app.factory('srvLogger', function($q, $http,$filter){
       return defer2.promise;
     };
     //https://freegeoip.net/json
+    var getLogs = function(){
+    var defer6 = $q.defer();
+     $http.get('../TPFinalServices/Datos/index.php/traerLogs')
+      .then(function(response){
+      defer6.resolve(response.data);
+    },function(response) {
+        defer6.reject(response);
+    });
+      return defer6.promise;
+    };
     return{
       insertarLog: insertaLog,
-      getIpAdress: getIp
+      getIpAdress: getIp,
+      getTodosLosLogs: getLogs
     };
 });

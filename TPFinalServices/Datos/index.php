@@ -163,6 +163,10 @@ $app->get('/traerTurnosPorDoctor[/{idDoctor}]', function ($request, $response, $
     $listado = Turno::TraerTurnosPorDoctor($args['idDoctor']);
     return json_encode($listado);
 });
+$app->get('/traerLogs[/]', function ($request, $response, $args) {
+    $listado = Logger::TraerLogs();
+    return json_encode($listado);
+});
 $app->post('/traerDisponibilidadHoraria[/]', function ($request, $response, $args) {
     $body = $request->getBody();
     $input = json_decode($body);

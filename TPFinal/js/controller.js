@@ -644,7 +644,7 @@ ServiceGrillaAdmin.getdoctores().then(function(respuesta){
     console.log('unable to get the data', error);
   });
 })
-.controller('templateGrillaTurnosCtrl', function($scope,$http,$auth,$state,ServiceGrillaTurnos,uiGridConstants,srvDoctores){
+.controller('templateGrillaTurnosCtrl', function($scope,$http,$auth,$state,ServiceGrillaTurnos,uiGridConstants,srvDoctores,$rootScope,srvLogger){
 	if(!$auth.isAuthenticated())
     {
       $state.go('login');
@@ -688,6 +688,11 @@ ServiceGrillaAdmin.getdoctores().then(function(respuesta){
       .then(function(respuesta){
         if(respuesta && respuesta.data){
           console.log('Turno cambiado');
+          $rootScope.objetoLog.accion = 'Marco un turno como asistido/no asistido con perfil: ' + payload.perfil + '. ';
+          srvLogger.insertarLog($rootScope.objetoLog)
+          .then(function(respuesta){
+            console.log(respuesta);
+          })
         }else{
           console.log('No se pudo cambiar el turno');
         }

@@ -36,6 +36,16 @@ class Logger
 		return $logBuscado;	
 					
 	}
+
+	public static function TraerLogs() 
+	{	
+		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
+		$consulta =$objetoAccesoDato->RetornarConsulta("select * from logs");
+		$consulta->execute();
+		$arrayLogs = $consulta->fetchAll(PDO::FETCH_CLASS, "logger");
+		return $arrayLogs;	
+					
+	}
 	
 	public static function InsertarLog($datos)
 	{

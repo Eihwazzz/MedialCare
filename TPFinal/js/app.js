@@ -111,6 +111,14 @@ app.config(function($stateProvider, $urlRouterProvider, $authProvider) {
       'logout': {templateUrl: 'templates/logout.html', controller: 'logoutCtrl'}
     }
   })
+    .state('verLogs', {
+    url: '/verLogs',
+    views: {
+      'principal': { templateUrl: 'templates/templateLogs.html',controller: 'logsCtrl' },
+      'menuSuperior': {templateUrl: 'templates/menuSup.html',controller: 'menuSupCtrl'},
+      'logout': {templateUrl: 'templates/logout.html', controller: 'logoutCtrl'}
+    }
+  })
     .state('verMapa', {
     url: '/verMapa/{{:id}?:perfil?}',
     views: {
