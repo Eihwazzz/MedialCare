@@ -212,9 +212,28 @@ app.service('srvTurnos', function($http,$q){
     });
       return defer3.promise;
     };
-  
+    var turnosPorDoctor = function(idDoctor){
+    var deferTurnDoc = $q.defer();
+     $http.get('../TPFinalServices/Datos/index.php/traerTurnosPorDoctor/'+idDoctor).then(function(response){
+      deferTurnDoc.resolve(response.data);
+    },function(response) {
+        deferTurnDoc.reject(response);
+    });
+      return deferTurnDoc.promise;
+    };
+    var disponibilidadHoraria = function(datos){
+    var deferDisponibilidad = $q.defer();
+     $http.post('../TPFinalServices/Datos/index.php/traerDisponibilidadHoraria',{info:datos}).then(function(response){
+      deferDisponibilidad.resolve(response.data);
+    },function(response) {
+        deferDisponibilidad.reject(response);
+    });
+      return deferDisponibilidad.promise;
+    };
     return{
-      traerTurnos: turnos
+      traerTurnos: turnos,
+      traerTurnosPorDoctor: turnosPorDoctor,
+      traerDisponibilidadHoraria: disponibilidadHoraria
     };
 });
 app.service('ServiceModificarPaciente', function($http,$q){

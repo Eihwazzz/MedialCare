@@ -277,21 +277,65 @@ calculateAndDisplayRoute(
   };
 
 })
-.controller('solicitudDeTurnoCtrl', function($scope, $http, $auth, $stateParams, $state, ServiceTraerDoctoresTurnos, ServiceTraerDoctorPorId, ServiceGuardarTurno, $filter,ServiceTraerEspecialidades) {
+.controller('solicitudDeTurnoCtrl', function($scope, $http, $auth, $stateParams, $state, ServiceTraerDoctoresTurnos, ServiceTraerDoctorPorId, ServiceGuardarTurno, $filter,ServiceTraerEspecialidades,srvTurnos) {
   if(!$auth.isAuthenticated())
     {
       $state.go('login');
     }
+    $scope.fechasIso = [];
+    srvTurnos.traerTurnosPorDoctor($stateParams.id)
+    .then(function(respuesta){
+      $scope.turnosPorDoctor = respuesta;
+      for(var i=0;i<$scope.turnosPorDoctor.length;++i){
+        $scope.fechasIso.push($scope.turnosPorDoctor[i].fecha);
+      }
+      console.log(respuesta);
+    })
     $scope.volver = function(){
       $state.go('solicitarTurno');
     };
+     var array = ["03-08-2017","08-08-2017","09-08-2017"]
+    $( "#datepicker" ).datepicker({
+      dateFormat: "dd/mm/yy",
+      minDate: 0,
+      maxDate: "+3m",
+      /*beforeShowDay: function (day) { 
+           var day = day.getDay(); 
+           if (day == 0 || day == 6) { 
+             return [false] 
+           } else { 
+             return [true] 
+           } 
+           },*/
+        beforeShowDay: function(date){
+          //var string = jQuery.datepicker.formatDate('dd-mm-yy', date);
+          var day = date.getDay();
+          /*var arrayPrueba = ["2017-08-22"];
+          var string = jQuery.datepicker.formatDate('yy-mm-dd', date);
+          var isDisabled = $scope.fechasIso.indexOf(string) == -1;*/
+          return [ day != 0 && day !=6 ]
+    },
+      minDate: new Date(),
+      onSelect: function(dateText, instance){
+        $scope.fecha = dateText;
+        var param = {
+          idDoctor:$stateParams.id,
+          fecha:dateText
+        };
+        srvTurnos.traerDisponibilidadHoraria(param)
+        .then(function(respuesta){
+          console.log(respuesta);
+          $scope.horaSeleccionada = respuesta[0];
+          $scope.horarios = respuesta;
+        })
+      }
+    });
     $scope.turno = {};
     ServiceTraerEspecialidades.getEspecialidad($stateParams.id)
     .then(function(respuesta){
       console.log(respuesta);
       $scope.especialidad = respuesta.nombre_espec;
     })
-
 
     //console.log($stateParams.id);
     var payload = $auth.getPayload();
@@ -300,16 +344,25 @@ calculateAndDisplayRoute(
     $scope.turno.id_paciente = payload.id;
     $scope.guardarTurno = function(){
       console.log($scope.turno.hora);
-      var fechaTurno = new Date(toJSONLocal($scope.fecha));
-      $scope.turno.fecha = $filter('date')(fechaTurno,'yyyy-MM-dd');
+      //var fechaTurno = new Date(toJSONLocal($scope.fecha));
+      //$scope.turno.fecha = $filter('date')(fechaTurno,'yyyy-MM-dd');
+      $scope.turno.fecha = $scope.fecha;
       //$scope.turno.fecha = fechaTurno.toLocaleDateString();
       console.log($scope.turno);
+      
       $scope.turnoAEnviar = angular.copy($scope.turno);
       $scope.turnoAEnviar.hora = $scope.turnoAEnviar.hora + ':00:00';
       $scope.turnoAEnviar.nombreEspec = $scope.especialidad;
+      /*var fechaElegidaParseada = $scope.turno.fecha.split('/');
+      var fechaElegidaIsoAux = new Date(fechaElegidaParseada[2],fechaElegidaParseada[1]-1,fechaElegidaParseada[0]);
+      $scope.fechaElegidaIso = $filter('date')(fechaElegidaIsoAux  , "yyyy-MM-dd");*/
       //alert(typeof $scope.turno.fecha);
-
-      
+      /*var fechaElegidaParseada = $scope.turno.fecha.split('/');
+      var fechaElegidaIso = new Date(fechaElegidaParseada[2],fechaElegidaParseada[1],fechaElegidaParseada[0]).toISOString();
+      var fechaTurnoIso = new Date($scope.turnosPorDoctor[0].fecha).toISOString();*/
+      /*if($scope.turnosPorDoctor[0].fecha == $scope.fechaElegidaIso){
+        console.log("Date igual");
+      }*/
       ServiceGuardarTurno.guardarTurno($scope.turnoAEnviar).then(function(respuesta){
         console.log(respuesta);
         $state.go('grillaTurnos');
@@ -481,8 +534,6 @@ calculateAndDisplayRoute(
                     .then(function(respuesta){
                       console.log(respuesta);
                     })
-                    console.log($rootScope.ip);
-                    console.log($rootScope.pais);
                 }
             };
             xhttp.open("GET", "//freegeoip.net/json/?callback=", true);

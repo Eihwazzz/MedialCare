@@ -81,6 +81,7 @@ $app->post('/GuardarTurno[/]', function($request, $response, $args) {
     //var_dump($input->turno);
     $ultimoId = Turno::GuardarTurno($input->turno);
     //var_dump($ultimoId);
+    return $ultimoId;
     $answer = array( 'answer' => 'Doctor Ingresado!' );
         $json = json_encode( $answer );
         var_dump($json);
@@ -143,6 +144,17 @@ $app->get('/getusuarios[/{perfil}]', function ($request, $response, $args) {
         else{
             return "Fallo algo";
         }
+});
+$app->get('/traerTurnosPorDoctor[/{idDoctor}]', function ($request, $response, $args) {
+    $listado = Turno::TraerTurnosPorDoctor($args['idDoctor']);
+    return json_encode($listado);
+});
+$app->post('/traerDisponibilidadHoraria[/]', function ($request, $response, $args) {
+    $body = $request->getBody();
+    $input = json_decode($body);
+    
+    $listado = Turno::TraerDisponibilidadHoraria($input);
+    return json_encode($listado);
 });
 $app->get('/getdoctoresturnos[/{perfil}]', function ($request, $response, $args) {
         if($args['perfil'] == 'doctores'){

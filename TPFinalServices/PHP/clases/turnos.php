@@ -76,6 +76,45 @@ class Turno
 		return $arrTurnos;
 	}
 	
+	public static function TraerTurnosPorDoctor($idDoctor)
+	{
+		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
+		$consulta =$objetoAccesoDato->RetornarConsulta("
+			SELECT t.fecha,  t.horario
+			FROM turnos t
+			WHERE t.cod_doctor = :idDoctor");
+		$consulta->bindValue(':idDoctor',$idDoctor, PDO::PARAM_INT);
+		$consulta->execute();
+		$arrTurnos= $consulta->fetchAll(PDO::FETCH_CLASS, "turno");	
+		return $arrTurnos;
+	}
+	/*
+	select hora from disponibilidad_horaria
+        WHERE hora NOT IN (SELECT t.horario
+			FROM turnos t
+			WHERE t.cod_doctor = 1
+            AND t.fecha = date_format('2017-08-10', '%Y-%m-%d'))
+	*/
+    public static function TraerDisponibilidadHoraria($datos)
+	{
+		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
+		$consulta =$objetoAccesoDato->RetornarConsulta("
+			SELECT hora 
+			FROM disponibilidad_horaria
+        	WHERE hora NOT IN (SELECT t.horario
+			FROM turnos t
+			WHERE t.cod_doctor = :idDoctor
+            AND t.fecha = :fecha)");
+		$dt = DateTime::createFromFormat('d/m/Y', $datos->info->fecha);
+		$format = "Y-m-d"; //or something else that date() accepts as a format
+		//return date_format(date_create($dt->format(DateTime::ATOM)), $format);
+		$consulta->bindValue(':idDoctor',$datos->info->idDoctor, PDO::PARAM_INT);
+		$consulta->bindValue(':fecha',date_format(date_create($dt->format(DateTime::ATOM)), $format), PDO::PARAM_STR);
+		$consulta->execute();
+		$arrTurnos= $consulta->fetchAll(PDO::FETCH_CLASS, "turno");	
+		return $arrTurnos;
+	}
+
 	public static function TraerTurnosPorEspecialidad()
 	{
 		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
@@ -100,9 +139,15 @@ class Turno
 		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
 		$consulta =$objetoAccesoDato->RetornarConsulta("INSERT into turnos (cod_doctor,id_paciente,fecha,horario,nombre_espec)values(:idDoctor,:idPaciente,:fecha,:hora,:nombreEspec)");
 		//$consulta =$objetoAccesoDato->RetornarConsulta("CALL InsertarPersona (:nombre,:apellido,:dni,:foto)");
+		//$timestamp = strtotime($turno->fecha);
+		$dt = DateTime::createFromFormat('d/m/Y', $turno->fecha);
+		//return date('d/m/Y', $dt->getTimestamp());
+		//return $dt->format(DateTime::ATOM);
+		//echo $dt->getTimestamp(); # or $dt->format('U');
+		//date('d/m/Y', $dt->getTimestamp());
 		$consulta->bindValue(':idDoctor',$turno->cod_doctor, PDO::PARAM_INT);
 		$consulta->bindValue(':idPaciente', $turno->id_paciente, PDO::PARAM_INT);
-		$consulta->bindValue(':fecha', $turno->fecha, PDO::PARAM_STR);
+		$consulta->bindValue(':fecha', $dt->format(DateTime::ATOM), PDO::PARAM_STR);
 		$consulta->bindValue(':nombreEspec', $turno->nombreEspec, PDO::PARAM_STR);
 		$consulta->bindValue(':hora', $turno->hora, PDO::PARAM_INT);
 		$consulta->execute();		
@@ -138,25 +183,5 @@ class Turno
 			$consulta->bindValue(':foto', $persona->foto, PDO::PARAM_STR);
 			return $consulta->execute();
 	}
-
-
-	public static function InsertarAdministrador($persona)
-	{
-		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
-		$consulta =$objetoAccesoDato->RetornarConsulta("INSERT into administradores (nombre,mail,clave,foto)values(:nombre,:mail,:clave,:foto)");
-		//$consulta =$objetoAccesoDato->RetornarConsulta("CALL InsertarPersona (:nombre,:apellido,:dni,:foto)");
-		$consulta->bindValue(':nombre',$persona->nombre, PDO::PARAM_STR);
-		$consulta->bindValue(':mail', $persona->mail, PDO::PARAM_STR);
-		$consulta->bindValue(':clave', $persona->clave, PDO::PARAM_STR);
-		$consulta->bindValue(':foto', $persona->foto, PDO::PARAM_STR);
-		$consulta->execute();		
-		return $objetoAccesoDato->RetornarUltimoIdInsertado();
-	
-				
-	}	
-
-
-
-
 
 }
