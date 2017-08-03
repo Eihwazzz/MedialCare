@@ -995,7 +995,32 @@ ServiceGrillaAdmin.getdoctores().then(function(respuesta){
       var markersArray = [];
       var directionsDisplay = new google.maps.DirectionsRenderer;
       var pos = {};
-      if (navigator.geolocation) {
+
+      pos.lat = -34.6623101;
+      pos.lng = -58.3668938;
+      var myLatLng = {lat: pos.lat, lng: pos.lng};
+      var map = new google.maps.Map(document.getElementById('mapPaciente'), {
+            zoom: 15,
+            center: {lat: pos.lat, lng: pos.lng}
+          });
+
+      
+      marker = new google.maps.Marker({
+            position: myLatLng,
+            map: map,
+            title: 'Location'
+          });
+          markersArray.push(marker);
+      var infoWindow = new google.maps.InfoWindow({map: map});
+      function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+      infoWindow.setPosition(pos);
+      infoWindow.setContent(browserHasGeolocation ?
+          'Error: The Geolocation service failed.' :
+          'Error: Your browser doesn\'t support geolocation.');
+      }    
+          directionsDisplay.setMap(map);
+
+      /*if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(function(position) {
           pos = {
             lat: position.coords.latitude,
@@ -1021,7 +1046,7 @@ ServiceGrillaAdmin.getdoctores().then(function(respuesta){
       } else {
         // Browser doesn't support Geolocation
         handleLocationError(false, infoWindow, map.getCenter());
-      }
+      }*/
     }
 
     
